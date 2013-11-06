@@ -1,4 +1,4 @@
-// emitr built for browser 2013-11-06T17:47:13.380Z
+// emitr built for browser 2013-11-06T22:59:14.419Z
 ;(function (name, factory) {
 	if (typeof define === 'function') {
 		// The factory function itself will detect this and define the library.
@@ -108,6 +108,178 @@
 		module.exports = require('./Emitter');
 		module.exports.meta = require('./events');
 		module.exports.Event = require('./Event');
+	});
+	_define("emitr/lib/events", function(require, exports, module) {
+		"use strict";
+		
+		var Event = require('./Event');
+		
+		var MetaEvent = Event.extend(
+				/**
+				 * @memberOf Emitter.meta
+				 * @class MetaEvent
+				 * @param {*} event The event this MetaEvent is about
+				 * @classdesc
+				 * A parent class for all meta events.
+				 */
+						function(event) {
+					/**
+					 * Event provides the identifier of the event that this MetaEvent is about.
+					 * @name Emitter.meta.MetaEvent#event
+					 * @type {*}
+					 */
+					this.event = event;
+				}
+		);
+		/**
+		 * @memberOf Emitter.meta
+		 * @extends Emitter.meta.MetaEvent
+		 * @class ListenerEvent
+		 * @classdesc
+		 * A parent class for all MetaEvents about listeners.
+		 */
+		var ListenerEvent = MetaEvent.extend(
+				function(event, listener, context) {
+					MetaEvent.call(this, event);
+					/**
+					 * The listener this ListenerEvent is about.
+					 * @name Emitter.meta.ListenerEvent#listener
+					 * @type {function}
+					 */
+					this.listener = listener;
+					/**
+					 * The context associated with the listener.
+					 * @name Emitter.meta.ListenerEvent#context
+					 * @type {?object}
+					 */
+					this.context = context;
+				}
+		);
+		/**
+		 * @memberOf Emitter.meta
+		 * @class AddListenerEvent
+		 * @extends Emitter.meta.ListenerEvent
+		 */
+		var AddListenerEvent = ListenerEvent.extend();
+		/**
+		 * @memberOf Emitter.meta
+		 * @class RemoveListenerEvent
+		 * @extends Emitter.meta.ListenerEvent
+		 */
+		var RemoveListenerEvent = ListenerEvent.extend();
+		/**
+		 * @memberOf Emitter.meta
+		 * @class DeadEvent
+		 * @extends Emitter.meta.MetaEvent
+		 */
+		var DeadEvent = MetaEvent.extend(
+				function(event, args) {
+					MetaEvent.call(this, event);
+					this.data = args;
+				}
+		);
+		
+		/**
+		 * Where the meta events live.
+		 * @memberOf Emitter
+		 * @namespace meta
+		 */
+		module.exports = {
+			MetaEvent: MetaEvent,
+			ListenerEvent: ListenerEvent,
+			AddListenerEvent: AddListenerEvent,
+			RemoveListenerEvent: RemoveListenerEvent,
+			DeadEvent: DeadEvent
+		};
+		
+	});
+	_define("emitr/lib/Event", function(require, exports, module) {
+		"use strict";
+		
+		var shams = require('./shams');
+		// Event ///////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * Creates a base Event object.
+		 * @constructor
+		 * @memberOf Emitter
+		 * @class Event
+		 * @classdesc
+		 * Event provides a convenient base class for events.
+		 */
+		var Event = function() {};
+		
+		/**
+		 * Extend provides a shorthand for creating subclasses of the class
+		 * whose constructor it is attached to.
+		 *
+		 * You can pass in an object that represents the things that
+		 * should be added to the prototype (in which case, the special
+		 * member 'constructor' if present will become the constructor),
+		 * or a function that represents the constructor whose prototype
+		 * should be modified, or nothing at all, in which case a new
+		 * constructor will be created that calls the superclass constructor.
+		 *
+		 * @memberOf Emitter.Event
+		 * @param {object|function} [properties] an object containing methods to be added to the prototype, or the constructor function, or nothing at all.
+		 * @returns {function} a constructor function for the newly created subclass.
+		 */
+		Event.extend = function inlineExtend(properties) {
+			var superclass = this, subclassConstructor;
+			if (typeof superclass !== 'function') { throw new TypeError("extend: Superclass must be a constructor function, was a " + typeof superclass); }
+		
+			if (typeof properties === 'function') {
+				subclassConstructor = properties;
+			} else if (properties != null && properties.hasOwnProperty('constructor')) {
+				subclassConstructor = properties.constructor;
+			} else {
+				subclassConstructor = function() {
+					superclass.apply(this, arguments);
+				};
+			}
+			subclassConstructor.superclass = superclass;
+			subclassConstructor.prototype = shams.create(superclass.prototype, {
+				constructor: {
+					enumerable: false, value: subclassConstructor
+				}
+			});
+		
+			if (typeof properties === 'object') {
+				if (shams.getPrototypeOf(properties) !== Object.prototype) {
+					throw new Error("extend: Can't extend something that already has a prototype chain.");
+				}
+				for (var instanceProperty in properties) {
+					if (instanceProperty !== 'constructor' && properties.hasOwnProperty(instanceProperty)) {
+						subclassConstructor.prototype[instanceProperty] = properties[instanceProperty];
+					}
+				}
+			}
+			for (var staticProperty in superclass) {
+				if (superclass.hasOwnProperty(staticProperty)) {
+					subclassConstructor[staticProperty] = superclass[staticProperty];
+				}
+			}
+		
+			return subclassConstructor;
+		};
+		/**
+		 * A simple toString is provided to aid in debugging.
+		 * @returns {string} a representation of all the fields on the object.
+		 */
+		Event.prototype.toString = function() {
+			var result = [];
+			for (var key in this) {
+				// toString should show inherited properties too.
+				//noinspection JSUnfilteredForInLoop
+				if (typeof result[key] !== 'function') {
+					//noinspection JSUnfilteredForInLoop
+					result.push(key + ": " + this[key] + ",");
+				}
+			}
+			return result.join(" ");
+		};
+		
+		module.exports = Event;
 	});
 	_define("emitr/lib/Emitter", function(require, exports, module) {
 		"use strict";
@@ -377,178 +549,6 @@
 		
 		module.exports = Emitter;
 		
-	});
-	_define("emitr/lib/events", function(require, exports, module) {
-		"use strict";
-		
-		var Event = require('./Event');
-		
-		var MetaEvent = Event.extend(
-				/**
-				 * @memberOf Emitter.meta
-				 * @class MetaEvent
-				 * @param {*} event The event this MetaEvent is about
-				 * @classdesc
-				 * A parent class for all meta events.
-				 */
-						function(event) {
-					/**
-					 * Event provides the identifier of the event that this MetaEvent is about.
-					 * @name Emitter.meta.MetaEvent#event
-					 * @type {*}
-					 */
-					this.event = event;
-				}
-		);
-		/**
-		 * @memberOf Emitter.meta
-		 * @extends Emitter.meta.MetaEvent
-		 * @class ListenerEvent
-		 * @classdesc
-		 * A parent class for all MetaEvents about listeners.
-		 */
-		var ListenerEvent = MetaEvent.extend(
-				function(event, listener, context) {
-					MetaEvent.call(this, event);
-					/**
-					 * The listener this ListenerEvent is about.
-					 * @name Emitter.meta.ListenerEvent#listener
-					 * @type {function}
-					 */
-					this.listener = listener;
-					/**
-					 * The context associated with the listener.
-					 * @name Emitter.meta.ListenerEvent#context
-					 * @type {?object}
-					 */
-					this.context = context;
-				}
-		);
-		/**
-		 * @memberOf Emitter.meta
-		 * @class AddListenerEvent
-		 * @extends Emitter.meta.ListenerEvent
-		 */
-		var AddListenerEvent = ListenerEvent.extend();
-		/**
-		 * @memberOf Emitter.meta
-		 * @class RemoveListenerEvent
-		 * @extends Emitter.meta.ListenerEvent
-		 */
-		var RemoveListenerEvent = ListenerEvent.extend();
-		/**
-		 * @memberOf Emitter.meta
-		 * @class DeadEvent
-		 * @extends Emitter.meta.MetaEvent
-		 */
-		var DeadEvent = MetaEvent.extend(
-				function(event, args) {
-					MetaEvent.call(this, event);
-					this.data = args;
-				}
-		);
-		
-		/**
-		 * Where the meta events live.
-		 * @memberOf Emitter
-		 * @namespace meta
-		 */
-		module.exports = {
-			MetaEvent: MetaEvent,
-			ListenerEvent: ListenerEvent,
-			AddListenerEvent: AddListenerEvent,
-			RemoveListenerEvent: RemoveListenerEvent,
-			DeadEvent: DeadEvent
-		};
-		
-	});
-	_define("emitr/lib/Event", function(require, exports, module) {
-		"use strict";
-		
-		var shams = require('./shams');
-		// Event ///////////////////////////////////////////////////////////////////////////////////////////
-		
-		/**
-		 * Creates a base Event object.
-		 * @constructor
-		 * @memberOf Emitter
-		 * @class Event
-		 * @classdesc
-		 * Event provides a convenient base class for events.
-		 */
-		var Event = function() {};
-		
-		/**
-		 * Extend provides a shorthand for creating subclasses of the class
-		 * whose constructor it is attached to.
-		 *
-		 * You can pass in an object that represents the things that
-		 * should be added to the prototype (in which case, the special
-		 * member 'constructor' if present will become the constructor),
-		 * or a function that represents the constructor whose prototype
-		 * should be modified, or nothing at all, in which case a new
-		 * constructor will be created that calls the superclass constructor.
-		 *
-		 * @memberOf Emitter.Event
-		 * @param {object|function} [properties] an object containing methods to be added to the prototype, or the constructor function, or nothing at all.
-		 * @returns {function} a constructor function for the newly created subclass.
-		 */
-		Event.extend = function inlineExtend(properties) {
-			var superclass = this, subclassConstructor;
-			if (typeof superclass !== 'function') { throw new TypeError("extend: Superclass must be a constructor function, was a " + typeof superclass); }
-		
-			if (typeof properties === 'function') {
-				subclassConstructor = properties;
-			} else if (properties != null && properties.hasOwnProperty('constructor')) {
-				subclassConstructor = properties.constructor;
-			} else {
-				subclassConstructor = function() {
-					superclass.apply(this, arguments);
-				};
-			}
-			subclassConstructor.superclass = superclass;
-			subclassConstructor.prototype = shams.create(superclass.prototype, {
-				constructor: {
-					enumerable: false, value: subclassConstructor
-				}
-			});
-		
-			if (typeof properties === 'object') {
-				if (shams.getPrototypeOf(properties) !== Object.prototype) {
-					throw new Error("extend: Can't extend something that already has a prototype chain.");
-				}
-				for (var instanceProperty in properties) {
-					if (instanceProperty !== 'constructor' && properties.hasOwnProperty(instanceProperty)) {
-						subclassConstructor.prototype[instanceProperty] = properties[instanceProperty];
-					}
-				}
-			}
-			for (var staticProperty in superclass) {
-				if (superclass.hasOwnProperty(staticProperty)) {
-					subclassConstructor[staticProperty] = superclass[staticProperty];
-				}
-			}
-		
-			return subclassConstructor;
-		};
-		/**
-		 * A simple toString is provided to aid in debugging.
-		 * @returns {string} a representation of all the fields on the object.
-		 */
-		Event.prototype.toString = function() {
-			var result = [];
-			for (var key in this) {
-				// toString should show inherited properties too.
-				//noinspection JSUnfilteredForInLoop
-				if (typeof result[key] !== 'function') {
-					//noinspection JSUnfilteredForInLoop
-					result.push(key + ": " + this[key] + ",");
-				}
-			}
-			return result.join(" ");
-		};
-		
-		module.exports = Event;
 	});
 	_define("emitr/lib/shams", function(require, exports, module) {
 		// Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////

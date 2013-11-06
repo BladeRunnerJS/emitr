@@ -9,12 +9,12 @@ title: Emitter
 EventEmitter
 ============
 
-[![Build Status](https://travis-ci.org/BladeRunnerJS/emitter.png)](https://travis-ci.org/BladeRunnerJS/emitter)
+[![Build Status](https://travis-ci.org/BladeRunnerJS/emitter.png)](https://travis-ci.org/BladeRunnerJS/emtr)
 
-* This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emitter).
-* Tests are [here](http://BladeRunnerJS.github.io/emitter/spec).
-* Source code is [here](https://github.com/BladeRunnerJS/emitter).
-* JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emitter/doc/Emitter.html).
+* This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emtr).
+* Tests are [here](http://BladeRunnerJS.github.io/emtr/spec).
+* Source code is [here](https://github.com/BladeRunnerJS/emtr).
+* JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emtr/doc/Emitter.html).
 
 The rendered form of this document includes the Emitter script so you can open
 a console and try it immediately.

@@ -3,7 +3,7 @@
 // imports
 var fs = require('fs-extra');
 var path = require('path');
-var webbuild = require('webbuild');
+var webbuild = require('webbuilder');
 
 // fields
 var now = new Date();

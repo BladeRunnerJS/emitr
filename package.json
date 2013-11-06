@@ -1,5 +1,5 @@
 {
-  "name": "emtr",
+  "name": "emitr",
   "version": "0.0.2",
   "description": "An event emitter that supports dispatching based on types.",
   "homepage": "http://BladeRunnerJS.github.io/emtr",

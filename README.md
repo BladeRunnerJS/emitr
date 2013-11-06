@@ -1,20 +1,20 @@
 ---
 layout: main
 permalink: /index.html
-title: emtr
+title: emitr
 ---
 
-<script type="text/javascript" src="target/single/emtr.js"></script>
+<script type="text/javascript" src="target/single/emitr.js"></script>
 
-Emtr - An Event Emitter
-=======================
+Emitr - An Event Emitter
+========================
 
-[![Build Status](https://travis-ci.org/BladeRunnerJS/emtr.png)](https://travis-ci.org/BladeRunnerJS/emtr)
+[![Build Status](https://travis-ci.org/BladeRunnerJS/emitr.png)](https://travis-ci.org/BladeRunnerJS/emitr)
 
-* This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emtr).
-* Tests are [here](http://BladeRunnerJS.github.io/emtr/spec).
-* Source code is [here](https://github.com/BladeRunnerJS/emtr).
-* JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emtr/doc/Emitter.html).
+* This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emitr).
+* Tests are [here](http://BladeRunnerJS.github.io/emitr/spec).
+* Source code is [here](https://github.com/BladeRunnerJS/emitr).
+* JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emitr/doc/Emitter.html).
 
 The rendered form of this document includes the Emitter script so you can open
 a console and try it immediately.
@@ -35,14 +35,14 @@ later.
 Making an Emitter
 -----------------
 
-While you can directly create a new Emitter (with `new emtr()`, or use standard prototypical
+While you can directly create a new Emitter (with `new emitr()`, or use standard prototypical
 inheritance to inherit from it, usually you will want to mix the Emitter
 methods in to your own classes or objects.
 
 ```javascript
 
 	function MyEmitter() {};
-	emtr.mixInto(MyEmitter);
+	emitr.mixInto(MyEmitter);
 
 	var emitter = new MyEmitter();
 ```
@@ -134,9 +134,9 @@ and `removeListener` events at the appropriate time.
 
 There are three meta events which are:
 
-* `emtr.meta.AddListenerEvent`, triggered when a listener is added.
-* `emtr.meta.RemoveListenerEvent`, triggered when a listener is removed.
-* `emtr.meta.DeadEvent`, triggered when an event is fired but no listeners receive it.
+* `emitr.meta.AddListenerEvent`, triggered when a listener is added.
+* `emitr.meta.RemoveListenerEvent`, triggered when a listener is removed.
+* `emitr.meta.DeadEvent`, triggered when an event is fired but no listeners receive it.
 
 ```javascript
 

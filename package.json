@@ -7,7 +7,7 @@
   "devDependencies": {
     "jsdoc3": "git://github.com/jsdoc3/jsdoc.git",
     "jasmine-node": "1.11.x",
-    "brjs-webbuild": "git://github.com/BladeRunnerJS/brjs-webbuild.git",
+    "webbuild": "git://github.com/BladeRunnerJS/webbuild.git",
     "fs-extra": "~0.8.1",
     "grunt": "~0.4.0",
     "grunt-cli": "~0.1.6",

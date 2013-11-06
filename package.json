@@ -2,7 +2,7 @@
   "name": "emitr",
   "version": "0.0.2",
   "description": "An event emitter that supports dispatching based on types.",
-  "homepage": "http://BladeRunnerJS.github.io/emtr",
+  "homepage": "http://BladeRunnerJS.github.io/emitr",
   "license": "MIT",
   "devDependencies": {
     "jsdoc3": "git://github.com/jsdoc3/jsdoc.git",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BladeRunnerJS/emtr.git"
+    "url": "https://github.com/BladeRunnerJS/emitr.git"
   },
   "main": "./lib/index.js",
   "scripts": {

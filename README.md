@@ -9,7 +9,7 @@ title: emtr
 Emtr - An Event Emitter
 =======================
 
-[![Build Status](https://travis-ci.org/BladeRunnerJS/emitter.png)](https://travis-ci.org/BladeRunnerJS/emtr)
+[![Build Status](https://travis-ci.org/BladeRunnerJS/emtr.png)](https://travis-ci.org/BladeRunnerJS/emtr)
 
 * This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emtr).
 * Tests are [here](http://BladeRunnerJS.github.io/emtr/spec).

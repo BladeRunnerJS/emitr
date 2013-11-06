@@ -6,8 +6,10 @@ title: emitr
 
 <script type="text/javascript" src="target/single/emitr.js"></script>
 
-Emitr - An Event Emitter
-========================
+emitr
+=====
+
+A simple emitter for node and the browser.
 
 [![Build Status](https://travis-ci.org/BladeRunnerJS/emitr.png)](https://travis-ci.org/BladeRunnerJS/emitr)
 

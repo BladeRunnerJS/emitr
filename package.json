@@ -1,0 +1,29 @@
+{
+  "name": "emtr",
+  "version": "0.0.2",
+  "description": "An event emitter that supports dispatching based on types.",
+  "homepage": "http://BladeRunnerJS.github.io/emtr",
+  "license": "MIT",
+  "devDependencies": {
+    "jsdoc3": "git://github.com/jsdoc3/jsdoc.git",
+    "jasmine-node": "1.11.x",
+    "brjs-webbuild": "git://github.com/BladeRunnerJS/brjs-webbuild.git",
+    "fs-extra": "~0.8.1",
+    "grunt": "~0.4.0",
+    "grunt-cli": "~0.1.6",
+    "grunt-saucelabs": "~4.0.2",
+    "grunt-contrib-connect": "~0.1.2",
+    "grunt-contrib-watch": "~0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BladeRunnerJS/emtr.git"
+  },
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "jasmine-node --verbose spec",
+    "saucelabs-test": "grunt saucelabs-test",
+    "doc": "jsdoc lib -d doc README.md",
+    "prepublish": "node build/package.js"
+  }
+}

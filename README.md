@@ -16,8 +16,8 @@ Emitr - An Event Emitter
 * Source code is [here](https://github.com/BladeRunnerJS/emitr).
 * JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emitr/doc/Emitter.html).
 
-The rendered form of this document includes the Emitter script so you can open
-a console and try it immediately.
+The rendered form of this document includes the Emitter script so you can open a console and try it
+immediately.
 
 My two main inspirations in making this implementation were the events in [backbone](http://backbonejs.org/#Events),
 and the EventEmitter in [node](http://nodejs.org/docs/latest/api/all.html#all_class_events_eventemitter).

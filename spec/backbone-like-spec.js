@@ -6,7 +6,7 @@
 /*global require, describe, beforeEach, it, expect*/
 
 var global = (function() {return this;})();
-checkEmitterBehavesLikeBackbone(global["emtr"] || require(".."));
+checkEmitterBehavesLikeBackbone(global["emitr"] || require(".."));
 
 function checkEmitterBehavesLikeBackbone(Emitter) {
 	describe('A backbone-like Emitter,', function() {

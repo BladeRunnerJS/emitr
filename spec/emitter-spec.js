@@ -2,7 +2,7 @@
 
 describe('An Emitter', function(){
 	var global = (function() {return this;})();
-	var Emitter = global["emtr"] || require("..");
+	var Emitter = global["emitr"] || require("..");
 
 	var emitter;
 

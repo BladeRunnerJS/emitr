@@ -1,13 +1,13 @@
 ---
 layout: main
 permalink: /index.html
-title: Emitter
+title: emtr
 ---
 
-<script type="text/javascript" src="Emitter.js"></script>
+<script type="text/javascript" src="target/single/emtr.js"></script>
 
-EventEmitter
-============
+Emtr - An Event Emitter
+=======================
 
 [![Build Status](https://travis-ci.org/BladeRunnerJS/emitter.png)](https://travis-ci.org/BladeRunnerJS/emtr)
 

@@ -34,6 +34,32 @@ the only unusual feature of this Emitter (and deliberately so) is that it allows
 dispatch objects rather than just strings.  Related to this is type based events, which I describe
 later.
 
+Getting It
+----------
+
+In node
+
+    $ npm install emitr --save
+
+To get the source (you'll want to npm install it afterwards)
+
+    $ git clone https://github.com/BladeRunnerJS/emitr.git
+
+With Bower
+
+    $ bower install emitr
+
+In the browser (better to take a copy of the file and serve it from within your app)
+
+    <script type="text/javascript" src="http://bladerunnerjs.github.io/emitr/target/single/emitr.js"></script>
+
+With require.js (again, better to take a copy and serve it within your app)
+
+    require(["http://bladerunnerjs.github.io/emitr/target/single/emitr.js"], function(emitr) {
+        // do your thing with emitr
+    });
+
+
 Making an Emitter
 -----------------
 

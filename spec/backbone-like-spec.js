@@ -116,12 +116,13 @@ function checkEmitterBehavesLikeBackbone(Emitter) {
 
 		it('does not alter the callback list during an event trigger', function() {
 			var counter = 0;
-			function incr() {
+			function incr1() {
 				counter++;
 			}
+			var incr2 = incr1.bind(null);
 			emitter.on('event', function() {
-				this.on('event', incr);
-				this.on('event', incr);
+				this.on('event', incr1);
+				this.on('event', incr2);
 			});
 			emitter.trigger('event');
 
@@ -130,12 +131,12 @@ function checkEmitterBehavesLikeBackbone(Emitter) {
 			emitter.off();
 
 			emitter.on('event', function() {
-				emitter.off('event', incr);
-				emitter.off('event', incr);
+				emitter.off('event', incr1);
+				emitter.off('event', incr2);
 			});
 
-			emitter.on('event', incr);
-			emitter.on('event', incr);
+			emitter.on('event', incr1);
+			emitter.on('event', incr2);
 
 			emitter.trigger('event');
 
@@ -165,8 +166,11 @@ function checkEmitterBehavesLikeBackbone(Emitter) {
 			function callback() {
 				this.called = true;
 			}
+			function callback2() {
+				this.called = true;
+			}
 			emitter.on('event', callback, context);
-			emitter.on('event', callback, context);
+			emitter.on('event', callback2, context);
 			emitter.off(null, null, context);
 			emitter.trigger('event');
 			expect(context.called).toBe(false);

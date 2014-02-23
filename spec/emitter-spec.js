@@ -41,6 +41,16 @@ describe('An Emitter', function(){
 			expect(called).toBe(true);
 		});
 
+		it('when the same function is registered for the same event, then it throws an error.', function() {
+			var err = null;
+			try {
+				emitter.on('event', listener);
+			} catch (e) {
+				err = e;
+			}
+			expect(err).toNotBe(null);
+		});
+
 		it('when the event is emitted with parameters, then the function should be called with those parameters.', function() {
 			emitter.trigger('event', true, false, 1, 2, 3, null);
 			expect(Array.prototype.slice.call(args)).toEqual([true, false, 1, 2, 3, null]);

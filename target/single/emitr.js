@@ -1,4 +1,4 @@
-// emitr built for browser 2014-02-28T16:24:01.806Z
+// emitr built for browser 2014-04-22T15:17:19.614Z
 ;(function (name, factory) {
 	if (typeof module === 'object') {
 		// Does not work with strict CommonJS, but only CommonJS-like environments
@@ -518,6 +518,11 @@
 					enumerable: false, value: subclassConstructor
 				}
 			});
+			
+			//IE8 bug. https://developer.mozilla.org/en-US/docs/ECMAScript_DontEnum_attribute
+			if (subclassConstructor.prototype.constructor !== subclassConstructor) {
+				subclassConstructor.prototype.constructor = subclassConstructor;
+			}
 		
 			if (typeof properties === 'object') {
 				if (shams.getPrototypeOf(properties) !== Object.prototype) {
@@ -595,21 +600,33 @@
 		}
 		exports.defineProperty = defineProperty;
 		
-		exports.create = Object.create || function(proto, descriptors) {
-			var myConstructor = function() {};
-			myConstructor.prototype = proto;
+		exports.create = function create(proto, descriptors) {
+			var result;
 		
-			var result = new myConstructor();
+			if(Object.create) {
+				result = Object.create(proto, descriptors);
 		
-			var keys = Object.keys(descriptors);
-			for (var i = 0; i < keys.length; ++i) {
-				var key = keys[i];
-				defineProperty(result, key, descriptors[key]);
+				var dunderProtoPassedIn = (proto && proto.__proto__) || (descriptors && descriptors.__proto__);
+		
+				if(result.__proto__ && !dunderProtoPassedIn) {
+					//ES5 shim added this and it's a lie so delete it.
+					delete result.__proto__;
+				}
+			} else {
+				var myConstructor = function() {};
+				myConstructor.prototype = proto;
+		
+				result = new myConstructor();
+		
+				var keys = Object.keys(descriptors);
+				for (var i = 0; i < keys.length; ++i) {
+					var key = keys[i];
+					defineProperty(result, key, descriptors[key]);
+				}
 			}
 		
 			return result;
 		};
-		
 		
 	});
 	_define("emitr/lib/MultiMap", function(require, exports, module) {

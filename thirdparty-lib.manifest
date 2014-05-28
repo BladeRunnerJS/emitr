@@ -1,0 +1,2 @@
+js: target/single/emitr.js
+exports: emitr

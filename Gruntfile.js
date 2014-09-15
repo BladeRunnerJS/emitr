@@ -11,12 +11,20 @@ module.exports = function(grunt) {
         platform: "linux"
     }, {
         browserName: "internet explorer",
+        platform: "WIN8.1",
+        version: "11"
+    }, {
+        browserName: "internet explorer",
         platform: "WIN8",
         version: "10"
     }, {
         browserName: "internet explorer",
         platform: "VISTA",
         version: "9"
+    }, {
+        browserName: "internet explorer",
+        platform: "VISTA",
+        version: "8"
     }];
 
     grunt.initConfig({
@@ -37,7 +45,7 @@ module.exports = function(grunt) {
                     build: process.env.TRAVIS_JOB_ID,
                     concurrency: 3,
                     browsers: browsers,
-                    testname: "jasmine tests"
+                    testname: "emitr tests"
                 }
             }
         },

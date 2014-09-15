@@ -1,17 +1,18 @@
-env: 
-  global: 
-  - secure: "jOvWxY00ODAA6r3QTW6FIkezfcl5zFdFXUWLG3+ZqNRx6JJguArLuX4aBUri5D146wfOdyb05M6e9VfiPQPfSJqLJCVNw1GSG+iMqsL2nPsJwAwVVWgvgtZAO3i3V9loOSMhWmR52840Ev3ongFzxNU8ouKgeoKC8/YF8+BF848="
-  - secure: "AVW1B92UyGawKhcXQ0IC9xCOIzyu7JbtqAsbdclYnUQljhNatVwz2+bdWMZsNkAvcydXZEeqRCDScs5MhSDD9uutuQyEIX30SVzXPNTO2Zv03tA8Nmm4DgY6DQBBclpP76jES/oprnQgiGbWiGoG9+Xr46bX8+JeSC02JogbKjA="
-before_script: 
+before_script:
 - npm install -g grunt-cli
 - git submodule update --init --recursive
 script:
 - npm test
 - npm run-script saucelabs-test
-node_js: 
+node_js:
 - 0.1
-branches: 
-  only: 
+branches:
+  only:
   - master
   - gh-pages
 language: node_js
+addons:
+  sauce_connect:
+    username: "bladerunnerjs"
+    access_key:
+      secure: "nsxozL1aVTwwfIFlNzC8AplNppUB3c6VM2SkhjI1y4LGQNA0sKGD6zKLq4c/WdLfXpksFa2JPmL5uDBtUjHg66HEx0MfSTSkAn6x4M4NlPwBqjfsJDcUvums4oKIzCwmEhzll8g+pooE1IzYXHHBQsu6Uy/0a3dZqyAWz12VNaI="

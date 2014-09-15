@@ -1,4 +1,4 @@
-// emitr built for browser 2014-04-22T15:17:19.614Z
+// emitr built for browser 2014-09-15T13:48:25.212Z
 ;(function (name, factory) {
 	if (typeof module === 'object') {
 		// Does not work with strict CommonJS, but only CommonJS-like environments

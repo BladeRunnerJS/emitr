@@ -20,6 +20,7 @@
     "karma-cli": "^0.1.0",
     "karma-firefox-launcher": "^0.1.6",
     "karma-mocha": "^0.2.0",
+    "karma-sauce-launcher": "^0.2.14",
     "mocha": "^2.2.5"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "test:lint": "eslint src test",
     "test:node": "mocha test",
     "test:browser": "karma start",
+    "test:saucelabs": "karma start karma-saucelabs.conf.js",
     "saucelabs-test": "grunt saucelabs-test",
     "prepublish": "browserify src/index.js -s emitr -o dist/emitr.js"
   }

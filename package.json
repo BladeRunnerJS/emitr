@@ -8,12 +8,6 @@
     "browserify": "^11.0.0",
     "chai": "^3.2.0",
     "eslint": "^0.24.1",
-    "fs-extra": "~0.6.3",
-    "grunt": "0.4.x",
-    "grunt-cli": "0.1.x",
-    "grunt-contrib-connect": "~0.1.2",
-    "grunt-contrib-watch": "~0.2.0",
-    "grunt-saucelabs": "8.3.x",
     "karma": "^0.13.3",
     "karma-browserify": "^4.2.1",
     "karma-chrome-launcher": "^0.2.0",
@@ -34,7 +28,6 @@
     "test:node": "mocha test",
     "test:browser": "karma start",
     "test:saucelabs": "karma start karma-saucelabs.conf.js",
-    "saucelabs-test": "grunt saucelabs-test",
     "prepublish": "browserify src/index.js -s emitr -o dist/emitr.js"
   }
 }

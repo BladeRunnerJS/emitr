@@ -6,7 +6,6 @@
   "license": "MIT",
   "devDependencies": {
     "webbuilder": "git://github.com/BladeRunnerJS/webbuilder.git",
-    "jsdoc3": "git://github.com/jsdoc3/jsdoc.git",
     "jshamcrest": "0.7.x",
     "jasmine-node": "1.14.x",
     "fs-extra": "~0.6.3",
@@ -24,7 +23,6 @@
   "scripts": {
     "test": "jasmine-node --verbose spec",
     "saucelabs-test": "grunt saucelabs-test",
-    "doc": "jsdoc lib -d doc README.md",
     "prepublish": "node build/package.js"
   }
 }

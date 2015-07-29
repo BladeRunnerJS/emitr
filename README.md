@@ -16,7 +16,6 @@ A simple emitter for node and the browser.
 * This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emitr).
 * Tests are [here](http://BladeRunnerJS.github.io/emitr/spec).
 * Source code is [here](https://github.com/BladeRunnerJS/emitr).
-* JSDoc for the Emitter mixin is [here](http://BladeRunnerJS.github.io/emitr/doc/Emitter.html).
 
 The rendered form of this document includes the Emitter script so you can open a console and try it
 immediately.

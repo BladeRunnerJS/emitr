@@ -23,7 +23,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "test": "npm run test:lint && npm run test:node && npm run test:browser",
+    "test": "npm run test:lint && npm run test:node && npm run test:browser && npm run test:saucelabs",
     "test:lint": "eslint src test",
     "test:node": "mocha test",
     "test:browser": "karma start",

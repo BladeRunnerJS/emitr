@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
-    
+    <title>JSDoc: Home</title>
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,10 +16,11 @@
 <body>
 
 <div id="main">
+
+    <h1 class="page-title">Home</h1>
+
     
-    <h1 class="page-title">Index</h1>
-    
-    
+
 
 
     
@@ -35,222 +36,171 @@
 
 
 
+
     
 
 
 
 
     <section>
-        <article><hr/>
+        <article><hr>
+<p>layout: main
+permalink: /index.html</p>
+<h2>title: emitr</h2><script type="text/javascript" src="target/single/emitr.js"></script>
 
-<hr/>
-
-<p>&lt;script type=&quot;text/javascript&quot; src=&quot;Emitter.js&quot;&gt;&lt;/script&gt;</p>
-
-<h1>EventEmitter</h1>
-
-<p>[<img alt="Build Status" src="https://travis-ci.org/BladeRunnerJS/emitter.png)](https://travis-ci.org/BladeRunnerJS/emitter"/></p>
-
-<ul><li>This document is available nicely formatted <a href="http://BladeRunnerJS.github.io/emitter">here</a>.</li><li>Tests are <a href="http://BladeRunnerJS.github.io/emitter/spec">here</a>.</li><li>Source code is <a href="https://github.com/BladeRunnerJS/emitter">here</a>.</li><li>JSDoc for the Emitter mixin is <a href="http://BladeRunnerJS.github.io/emitter/doc/Emitter.html">here</a>.</li></ul>
-
-<p>The rendered form of this document includes the Emitter script so you can open
-a console and try it immediately.</p>
-
+<h1>emitr</h1><p>A simple emitter for node and the browser.</p>
+<p><a href="https://travis-ci.org/BladeRunnerJS/emitr"><img src="https://travis-ci.org/BladeRunnerJS/emitr.png" alt="Build Status"></a></p>
+<ul>
+<li>This document is available nicely formatted <a href="http://BladeRunnerJS.github.io/emitr">here</a>.</li>
+<li>Tests are <a href="http://BladeRunnerJS.github.io/emitr/spec">here</a>.</li>
+<li>Source code is <a href="https://github.com/BladeRunnerJS/emitr">here</a>.</li>
+<li>JSDoc for the Emitter mixin is <a href="http://BladeRunnerJS.github.io/emitr/doc/Emitter.html">here</a>.</li>
+</ul>
+<p>The rendered form of this document includes the Emitter script so you can open a console and try it
+immediately.</p>
 <p>My two main inspirations in making this implementation were the events in <a href="http://backbonejs.org/#Events">backbone</a>,
 and the EventEmitter in <a href="http://nodejs.org/docs/latest/api/all.html#all_class_events_eventemitter">node</a>.</p>
-
-<p>If we hadn&#39;t required the ability to pass &#39;context&#39; into <code>on</code> and <code>off</code>, we probably would have gone with
+<p>If we hadn't required the ability to pass 'context' into <code>on</code> and <code>off</code>, we probably would have gone with
 <a href="http://robertwhurst.github.io/LucidJS/">LucidJS</a>.  Not leaking memory is difficult enough when
 building large applications; forcing people to keep extra objects around just so they can clean up after
 themselves is ugly enough that it discourages people from doing something important.</p>
-
-<p>While I haven&#39;t come across this exact combination of focussed microlibrary combined with context,
+<p>While I haven't come across this exact combination of focussed microlibrary combined with context,
 the only unusual feature of this Emitter (and deliberately so) is that it allows you to listen to and
 dispatch objects rather than just strings.  Related to this is type based events, which I describe
 later.</p>
-
-<h2>Making an Emitter</h2>
-
-<p>While you can directly create a new Emitter, or use standard prototypical
+<h2>Getting It</h2><p>In node</p>
+<pre class="prettyprint source"><code>$ npm install emitr --save</code></pre><p>To get the source (you'll want to npm install it afterwards)</p>
+<pre class="prettyprint source"><code>$ git clone https://github.com/BladeRunnerJS/emitr.git</code></pre><p>With Bower</p>
+<pre class="prettyprint source"><code>$ bower install emitr</code></pre><p>In the browser (better to take a copy of the file and serve it from within your app)</p>
+<pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://bladerunnerjs.github.io/emitr/target/single/emitr.js&quot;>&lt;/script></code></pre><p>With require.js (again, better to take a copy and serve it within your app)</p>
+<pre class="prettyprint source"><code>require([&quot;http://bladerunnerjs.github.io/emitr/target/single/emitr.js&quot;], function(emitr) {
+    // do your thing with emitr
+});</code></pre><h2>Making an Emitter</h2><p>While you can directly create a new Emitter (with <code>new emitr()</code>, or use standard prototypical
 inheritance to inherit from it, usually you will want to mix the Emitter
 methods in to your own classes or objects.</p>
+<pre class="prettyprint source lang-javascript"><code>
+    function MyEmitter() {};
+    emitr.mixInto(MyEmitter);
 
-<p><code></code>`javascript</p>
-
-<pre><code>function MyEmitter() {};
-Emitter.mixInto(MyEmitter);
-
-var emitter = new MyEmitter();</code></pre>
-
-<p><code></code>`</p>
-
-<h2>Standard Emitter Features</h2>
-
-<p>The big three methods are provided:</p>
-
+    var emitter = new MyEmitter();</code></pre><h2>Standard Emitter Features</h2><p>The big three methods are provided:</p>
 <p>on:</p>
+<pre class="prettyprint source lang-javascript"><code>
+    // Basic example:
 
-<p><code></code>`javascript</p>
+    emitter.on('some-event', function() {
+        // By default, 'this' is set to emitter inside here.
+        // you can change that by providing a context argument.
+    });
 
-<pre><code>// Basic example:
+    // Example using context:
 
-emitter.on(&#39;some-event&#39;, function() {
-	// By default, &#39;this&#39; is set to emitter inside here.
-	// you can change that by providing a context argument.
-});
+    function MyObject() {}
+    MyObject.prototype.onBoom = function() {
+        // in this example, 'this' is set to 'obj'.
+    };
 
-// Example using context:
+    var obj = new MyObject();
+    emitter.on('end-of-the-world', obj.onBoom, obj);</code></pre><p>The poorly (but commonly) named off:</p>
+<pre class="prettyprint source lang-javascript"><code>
+    // clears all listeners registered on emitter.
+    emitter.off();
 
-function MyObject() {}
-MyObject.prototype.onBoom = function() {
-	// in this example, &#39;this&#39; is set to &#39;obj&#39;.
-};
+    // clears all listeners for 'some-event'.
+    emitter.off('some-event');
 
-var obj = new MyObject();
-emitter.on(&#39;end-of-the-world&#39;, obj.onBoom, obj);</code></pre>
+    // removes the listener added with
+    //    emitter.on('some-event', callback);
+    emitter.off('some-event', callback);
 
-<p><code></code>`</p>
+    // removes the listener added with
+    //    emitter.on('some-event', callback, context);
+    emitter.off('some-event', callback, context);
 
-<p>The poorly (but commonly) named off:</p>
+    // removes all listeners registered with a context of context.
+    emitter.off(null, null, context);
+    // or
+    emitter.clearListeners(context);</code></pre><p>trigger (sometimes called emit or fire or notify):</p>
+<pre class="prettyprint source lang-javascript"><code>
+    // All listeners registered for the 'end-of-the-world' event
+    // will get called with alienSpacecraft as their first argument.
+    emitters.trigger('end-of-the-world', alienSpacecraft);</code></pre><p>once is another function that is commonly provided by Emitters:</p>
+<pre class="prettyprint source lang-javascript"><code>
+    // Once behaves similarly to .on, but the listener is only
+    // ever called once.
+    emitter.once('some-event', function() {
+        // this function will only be called once.
+    });
 
-<p><code></code>`javascript</p>
-
-<pre><code>// clears all listeners registered on emitter.
-emitter.off();
-
-// clears all listeners for &#39;some-event&#39;.
-emitter.off(&#39;some-event&#39;);
-
-// removes the listener added with
-//    emitter.on(&#39;some-event&#39;, callback);
-emitter.off(&#39;some-event&#39;, callback);
-
-// removes the listener added with
-//    emitter.on(&#39;some-event&#39;, callback, context);
-emitter.off(&#39;some-event&#39;, callback, context);
-
-// removes all listeners registered with a context of context.
-emitter.off(null, null, context);
-// or
-emitter.clearListeners(context);</code></pre>
-
-<p><code></code>`</p>
-
-<p>trigger (sometimes called emit or fire or notify):</p>
-
-<p><code></code>`javascript</p>
-
-<pre><code>// All listeners registered for the &#39;end-of-the-world&#39; event
-// will get called with alienSpacecraft as their first argument.
-emitters.trigger(&#39;end-of-the-world&#39;, alienSpacecraft);</code></pre>
-
-<p><code></code>`</p>
-
-<p>once is another function that is commonly provided by Emitters:</p>
-
-<p><code></code>`javascript</p>
-
-<pre><code>// Once behaves similarly to .on, but the listener is only
-// ever called once.
-emitter.once(&#39;some-event&#39;, function() {
-	// this function will only be called once.
-});
-
-emitter.trigger(&#39;some-event&#39;);
-emitter.trigger(&#39;some-event&#39;);</code></pre>
-
-<p><code></code>`</p>
-
-<h2>Extra Features</h2>
-
-<p>This Emitter provides two extra features.</p>
-
-<h3>MetaEvents</h3>
-
-<p>The emitter will also trigger special events that you can listen to in certain
+    emitter.trigger('some-event');
+    emitter.trigger('some-event');</code></pre><h2>Extra Features</h2><p>This Emitter provides two extra features.</p>
+<h3>MetaEvents</h3><p>The emitter will also trigger special events that you can listen to in certain
 circumstances. The event emitter in node does a similar thing, firing <code>newListener</code>
 and <code>removeListener</code> events at the appropriate time.</p>
-
 <p>There are three meta events which are:</p>
+<ul>
+<li><code>emitr.meta.AddListenerEvent</code>, triggered when a listener is added.</li>
+<li><code>emitr.meta.RemoveListenerEvent</code>, triggered when a listener is removed.</li>
+<li><code>emitr.meta.DeadEvent</code>, triggered when an event is fired but no listeners receive it.</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>
+    // In this example, I use an AddListenerEvent metaevent to
+    // create 'sticky' events behaviour for the ready event.
 
-<ul><li><code>Emitter.meta.AddListenerEvent</code>, triggered when a listener is added.</li><li><code>Emitter.meta.RemoveListenerEvent</code>, triggered when a listener is removed.</li><li><code>Emitter.meta.DeadEvent</code>, triggered when an event is fired but no listeners receive it.</li></ul>
+    function Document() {
+        this.isReady = false;
 
-<p><code></code>`javascript</p>
+        this.on(Emitter.meta.AddListenerEvent, function(addEvent) {
+            if (this.isReady) {
+                addEvent.listener.call(addEvent.context);
+            }
+        }, this);
+    }
+    Emitter.mixInto(Document);
+    Document.prototype.makeReady = function() {
+        this.isReady = true;
+        this.trigger('ready');
+    };
 
-<pre><code>// In this example, I use an AddListenerEvent metaevent to
-// create &#39;sticky&#39; events behaviour for the ready event.
+    var doc = new Document();
 
-function Document() {
-	this.isReady = false;
+    doc.makeReady();
 
-	this.on(Emitter.meta.AddListenerEvent, function(addEvent) {
-		if (this.isReady) {
-			addEvent.listener.call(addEvent.context);
-		}
-	}, this);
-}
-Emitter.mixInto(Document);
-Document.prototype.makeReady = function() {
-	this.isReady = true;
-	this.trigger(&#39;ready&#39;);
-};
+    // Even though makeReady was called before this 'on',
+    // the listener will still be called.
 
-var doc = new Document();
-
-doc.makeReady();
-
-// Even though makeReady was called before this &#39;on&#39;,
-// the listener will still be called.
-
-doc.on(&#39;ready&#39;, function() {
-	console.log(&#39;ready now&#39;);
-});</code></pre>
-
-<p><code></code>`</p>
-
-<h3>Type Based Events</h3>
-
-<p>The Events themselves in normal usage are usually string identifiers and then a list of
+    doc.on('ready', function() {
+        console.log('ready now');
+    });</code></pre><h3>Type Based Events</h3><p>The Events themselves in normal usage are usually string identifiers and then a list of
 arguments, almost like an algebraic data type - a tag and then a tuple of data items.  In an
 object language like javascript, it seems more natural to dispatch event objects instead and
 listen for them based on their type.</p>
+<pre class="prettyprint source lang-javascript"><code>
+    function MouseEvent(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 
-<p><code></code>`javascript</p>
+    emitter.on(MouseEvent, function(event) {
+        // in here, event is the instance of MouseEvent that
+        // we trigger the emitter with.
+    });
 
-<pre><code>function MouseEvent(x, y) {
-	this.x = x;
-	this.y = y;
-}
-
-emitter.on(MouseEvent, function(event) {
-	// in here, event is the instance of MouseEvent that
-	// we trigger the emitter with.
-});
-
-emitter.trigger(new MouseEvent(100, 99));</code></pre>
-
-<p><code></code>`</p>
-
-<p>It obeys the Liskov Substitution Principle, so a listener will also get notified of
+    emitter.trigger(new MouseEvent(100, 99));</code></pre><p>It obeys the Liskov Substitution Principle, so a listener will also get notified of
 events that are subclasses of the event type it is registered for.</p>
+<pre class="prettyprint source lang-javascript"><code>
+    function ClickEvent(button, x, y) {
+        MouseEvent.call(this, x, y);
+        this.button = button;
+    }
 
-<p><code></code>`javascript</p>
+    ClickEvent.prototype = Object.create(MouseEvent.prototype);
 
-<pre><code>function ClickEvent(button, x, y) {
-	MouseEvent.call(this, x, y);
-	this.button = button;
-}
+    emitter.on(MouseEvent, function(event) {
+        // in here, event is the instance of ClickEvent that
+        // we trigger the emitter with.
+    });
 
-ClickEvent.prototype = Object.create(MouseEvent.prototype);
-
-emitter.on(MouseEvent, function(event) {
-	// in here, event is the instance of ClickEvent that
-	// we trigger the emitter with.
-});
-
-emitter.trigger(new ClickEvent(&quot;right&quot;, 101, 100));</code></pre>
-
-<p><code></code>`</p></article>
+    emitter.trigger(new ClickEvent(&quot;right&quot;, 101, 100));</code></pre></article>
     </section>
 
 
@@ -261,13 +211,13 @@ emitter.trigger(new ClickEvent(&quot;right&quot;, 101, 100));</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Nov 06 2013 12:12:21 GMT-0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Wed Jul 29 2015 10:45:48 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>JSDoc: Source: Emitter.js</title>
-    
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,18 +16,18 @@
 <body>
 
 <div id="main">
-    
+
     <h1 class="page-title">Source: Emitter.js</h1>
+
     
-    
+
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>"use strict";
+            <pre class="prettyprint source linenums"><code>"use strict";
 
-var Emitter = null;
 var slice = Array.prototype.slice;
 
 var metaEvents = require('./events');
@@ -44,7 +44,9 @@ function notify(listeners, args) {
 	listeners = listeners.slice();
 	for (var i = 0, len = listeners.length; i &lt; len; ++i) {
 		var listener = listeners[i];
-		listener.callback.apply(listener.context, args);
+		try {
+			listener.callback.apply(listener.context, args);
+		} catch(e) {}
 	}
 	return true;
 }
@@ -70,7 +72,7 @@ function notifyRemoves(emitter, listenerRecords) {
  * Emitter provides event emitting capabilities, similar to Backbone.
  * For more information see &lt;a href="http://caplin.github.io/Emitter">the project page&lt;/a>.
  */
-Emitter = function Emitter() {
+function Emitter() {
 	this._emitterListeners = new MultiMap();
 	this._emitterMetaEventsOn = false;
 };
@@ -94,10 +96,21 @@ Emitter.prototype = {
 			this._emitterListeners = new MultiMap();
 		}
 
-		if (typeof eventIdentifier === 'function' && (eventIdentifier.prototype instanceof metaEvents.MetaEvent || eventIdentifier === metaEvents.MetaEvent)) {
+		if (typeof eventIdentifier === 'function' &amp;&amp; (eventIdentifier.prototype instanceof metaEvents.MetaEvent || eventIdentifier === metaEvents.MetaEvent)) {
 			// Since triggering meta events can be expensive, we only
 			// do so if a listener has been added to listen to them.
 			this._emitterMetaEventsOn = true;
+		}
+
+		var currentListeners = this._emitterListeners.getValues(eventIdentifier);
+		currentListeners = currentListeners.filter(function(listenerRecord) {
+			return listenerRecord.registeredContext === context
+				&amp;&amp; (listenerRecord.callback === callback
+					|| (listenerRecord.callback._wrappedCallback !== undefined
+						&amp;&amp; listenerRecord.callback._wrappedCallback === callback._wrappedCallback));
+		});
+		if (currentListeners.length > 0) {
+			throw new Error('This callback is already listening to this event.');
 		}
 
 		this._emitterListeners.add(eventIdentifier, {
@@ -179,7 +192,7 @@ Emitter.prototype = {
 				return true;
 			}
 			return false;
-		} else if (eventIdentifier === null && callback === null) {
+		} else if (eventIdentifier === null &amp;&amp; callback === null) {
 			// clear all listeners for a particular context.
 			return this.clearListeners(context);
 		} else {
@@ -190,10 +203,10 @@ Emitter.prototype = {
 				var callbackToCompare = record.callback._onceFunctionMarker === ONCE_FUNCTION_MARKER ? record.callback._wrappedCallback : record.callback;
 				var callbackMatches = callback === callbackToCompare;
 				var contextMatches = record.registeredContext === context;
-				return callbackMatches && contextMatches;
+				return callbackMatches &amp;&amp; contextMatches;
 			});
 
-			if (removedAListener && this._emitterMetaEventsOn === true) {
+			if (removedAListener &amp;&amp; this._emitterMetaEventsOn === true) {
 				this.trigger(new metaEvents.RemoveListenerEvent(eventIdentifier, callback, context));
 			}
 			return removedAListener;
@@ -223,7 +236,7 @@ Emitter.prototype = {
 			// navigate up the prototype chain emitting against the constructors.
 			if (typeof event === 'object') {
 				var last = event, proto = getPrototypeOf(event);
-				while (proto !== null && proto !== last) {
+				while (proto !== null &amp;&amp; proto !== last) {
 					if (this._emitterListeners.hasAny(proto.constructor)) {
 						anyListeners = true;
 						notify(this._emitterListeners.getValues(proto.constructor), arguments);
@@ -233,7 +246,7 @@ Emitter.prototype = {
 				}
 			}
 		}
-		if (this._emitterMetaEventsOn === true && anyListeners === false && event instanceof metaEvents.DeadEvent === false) {
+		if (this._emitterMetaEventsOn === true &amp;&amp; anyListeners === false &amp;&amp; event instanceof metaEvents.DeadEvent === false) {
 			this.trigger(new metaEvents.DeadEvent(event, args));
 		}
 		return anyListeners;
@@ -254,12 +267,12 @@ Emitter.prototype = {
 		}
 		this._emitterListeners.filterAll(function(record) {
 			var keepListener = record.registeredContext !== context;
-			if (trackRemovals && keepListener === false) {
+			if (trackRemovals &amp;&amp; keepListener === false) {
 				removedListeners.push(record);
 			}
 			return keepListener;
 		});
-		if (trackRemovals && removedListeners.length > 0) {
+		if (trackRemovals &amp;&amp; removedListeners.length > 0) {
 			notifyRemoves(this, removedListeners);
 		}
 	}
@@ -302,13 +315,13 @@ module.exports = Emitter;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Nov 06 2013 12:12:21 GMT-0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Wed Jul 29 2015 10:45:48 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

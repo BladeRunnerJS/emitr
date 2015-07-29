@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>JSDoc: Class: Emitter</title>
-    
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,177 +16,205 @@
 <body>
 
 <div id="main">
-    
+
     <h1 class="page-title">Class: Emitter</h1>
+
     
-    
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-    Emitter
-    </h2>
     
-        <div class="class-description">Emitter provides event emitting capabilities, similar to Backbone.For more information see <a href="http://caplin.github.io/Emitter">the project page</a>.</div>
+        <h2>
+        Emitter
+        </h2>
+        
+            <div class="class-description">Emitter provides event emitting capabilities, similar to Backbone.
+For more information see <a href="http://caplin.github.io/Emitter">the project page</a>.</div>
+        
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
     
-    
-    
         
-<dt>
+
+    
+    <h2>Constructor</h2>
+    
+
     <h4 class="name" id="Emitter"><span class="type-signature"></span>new Emitter<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        This constructor function can be used directly, but most commonly, you willcall it from within your own constructor.e.g. <code>Emitter.call(this);</code>It will set up the emitter state if called, but it is optional.
-    </div>
-    
 
     
-    
-    
-    
-    
-    
-    
+
+
+
+<div class="description">
+    This constructor function can be used directly, but most commonly, you will
+call it from within your own constructor.
+
+e.g. <code>Emitter.call(this);</code>
+
+It will set up the emitter state if called, but it is optional.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line46">line 46</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line33">line 33</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     </div>
+
     
+
     
-    
-    
-    
-    
-    
+
     
         <h3 class="subsection-title">Classes</h3>
-        
+
         <dl>
             <dt><a href="Emitter.Event.html">Event</a></dt>
             <dd></dd>
         </dl>
     
-    
+
+     
+
     
         <h3 class="subsection-title">Namespaces</h3>
-        
+
         <dl>
-            <dt><a href="namespaces.html#Emitter.meta"><a href="Emitter.meta.html">meta</a></a></dt>
+            <dt><a href="Emitter.meta.html">meta</a></dt>
             <dd></dd>
         </dl>
     
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="mixInto"><span class="type-signature">&lt;static> </span>mixInto<span class="signature">(destination)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Copies the Emitter methods onto the provided object.If the passed destination is a function, it copies the methodsonto the prototype of the passed destination.
-    </div>
+
     
 
     
-    
-    
-    
-    
-        <h5>Parameters:</h5>
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
+
+    
+
+    <h4 class="name" id=".mixInto"><span class="type-signature">(static) </span>mixInto<span class="signature">(destination)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Copies the Emitter methods onto the provided object.
+
+If the passed destination is a function, it copies the methods
+onto the prototype of the passed destination.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>destination</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -198,115 +226,131 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">the object to copy the Emitter   methods to or the constructor that should have its prototype   augmented with the Emitter methods.</td>
+
+            <td class="description last">the object to copy the Emitter
+   methods to or the constructor that should have its prototype
+   augmented with the Emitter methods.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line251">line 251</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line263">line 263</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="clearListeners"><span class="type-signature"></span>clearListeners<span class="signature">(context)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Clears all listeners registered for a particular context.
-    </div>
-    
 
     
+
+    <h4 class="name" id="clearListeners"><span class="type-signature"></span>clearListeners<span class="signature">(context)</span><span class="type-signature"></span></h4>
+
     
+
+
+
+<div class="description">
+    Clears all listeners registered for a particular context.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>context</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -315,117 +359,137 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">The context that all listeners should be removed for.  May not be null.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line220">line 220</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line232">line 232</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="off"><span class="type-signature"></span>off<span class="signature">(eventIdentifier, callback, context)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Clear previously registered listeners.With no arguments, this clears all listeners from this Emitter.With one argument, this clears all listeners registered to a particular event.With two or three arguments, this clears a specific listener.
-    </div>
-    
 
     
+
+    <h4 class="name" id="off"><span class="type-signature"></span>off<span class="signature">(eventIdentifier<span class="signature-attributes">nullable</span>, callback<span class="signature-attributes">nullable</span>, context<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
     
+
+
+
+<div class="description">
+    Clear previously registered listeners.
+
+With no arguments, this clears all listeners from this Emitter.
+
+With one argument, this clears all listeners registered to a particular event.
+
+With two or three arguments, this clears a specific listener.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>eventIdentifier</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -434,31 +498,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The identifier of the event to clear. If null, it will clear all events.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>callback</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -467,31 +531,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The callback function to clear.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>context</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -500,76 +564,88 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The context object for the callback.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line132">line 132</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line144">line 144</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     true if any listeners were removed.  This is not finalised yet and may change (particularly if we want to enable chaining).
 </div>
@@ -577,72 +653,77 @@
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">boolean</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(eventIdentifier, callback, <span class="optional">context</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Registers a listener for an event.If context is provided, then the <code>this</code> pointer will refer to itinside the callback.
-    </div>
-    
 
     
+
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(eventIdentifier, callback, context<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"></span></h4>
+
     
+
+
+
+<div class="description">
+    Registers a listener for an event.
+
+If context is provided, then the <code>this</code> pointer will refer to it
+inside the callback.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>eventIdentifier</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -651,29 +732,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The identifier of the event that the callback should listen to.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>callback</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -682,29 +763,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The function that should be called whenever the event is triggered.  May not be null.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>context</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -713,129 +794,146 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">An optional context that defines what 'this' should be inside the callback.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line62">line 62</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line63">line 63</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="once"><span class="type-signature"></span>once<span class="signature">(eventIdentifier, callback, <span class="optional">context</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Registers a listener to receive an event only once.If context is provided, then the <code>this</code> pointer will refer to itinside the callback.
-    </div>
-    
 
     
+
+    <h4 class="name" id="once"><span class="type-signature"></span>once<span class="signature">(eventIdentifier, callback, context<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"></span></h4>
+
     
+
+
+
+<div class="description">
+    Registers a listener to receive an event only once.
+
+If context is provided, then the <code>this</code> pointer will refer to it
+inside the callback.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>eventIdentifier</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -844,29 +942,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The identifier of the event that the callback should listen to.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>callback</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -875,29 +973,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The function that should be called the first time the event is triggered.  May not be null.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>context</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -906,129 +1004,146 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">An optional context that defines what 'this' should be inside the callback.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line98">line 98</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line110">line 110</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="trigger"><span class="type-signature"></span>trigger<span class="signature">(event, <span class="optional">args</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Fires an event, causing all the listeners registered for this event to be called.If the event is an object, this will also call any listeners registered forits class or any superclasses will also fire.
-    </div>
-    
 
     
+
+    <h4 class="name" id="trigger"><span class="type-signature"></span>trigger<span class="signature">(event, &hellip;args<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
     
+
+
+
+<div class="description">
+    Fires an event, causing all the listeners registered for this event to be called.
+
+If the event is an object, this will also call any listeners registered for
+its class or any superclasses will also fire.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>event</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -1037,29 +1152,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The event to fire.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>args</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -1068,78 +1183,90 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                     &lt;repeatable><br>
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Optional arguments to pass to the listeners.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line186">line 186</a>
+        <a href="Emitter.js.html">Emitter.js</a>, <a href="Emitter.js.html#line198">line 198</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     true if any listeners were notified, false otherwise.  This is not finalised and may change (particularly if we want to allow chaining).
 </div>
@@ -1147,31 +1274,30 @@
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">boolean</span>
 
 
-	</dd>
+    </dd>
 </dl>
+
+    
+
+
 
         
     
-    
-</dd>
 
-        </dl>
     
-    
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
@@ -1179,13 +1305,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Emitter.html">Emitter</a></li><li><a href="Emitter.Event.html">Event</a></li><li><a href="Emitter.meta.AddListenerEvent.html">AddListenerEvent</a></li><li><a href="Emitter.meta.DeadEvent.html">DeadEvent</a></li><li><a href="Emitter.meta.ListenerEvent.html">ListenerEvent</a></li><li><a href="Emitter.meta.MetaEvent.html">MetaEvent</a></li><li><a href="Emitter.meta.RemoveListenerEvent.html">RemoveListenerEvent</a></li></ul><h3>Namespaces</h3><ul><li><a href="Emitter.meta.html">meta</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Nov 06 2013 12:12:21 GMT-0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Wed Jul 29 2015 10:45:48 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

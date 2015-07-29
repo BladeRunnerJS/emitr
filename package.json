@@ -15,7 +15,8 @@
     "test:lint": "eslint src test",
     "test:node": "mocha test",
     "test:browser": "karma start",
-    "test:saucelabs": "karma start karma-saucelabs.conf.js"
+    "test:saucelabs": "karma start karma-saucelabs.conf.js",
+    "test:browser:debug": "karma start karma-debug.conf.js"
   },
   "devDependencies": {
     "browserify": "^11.0.0",

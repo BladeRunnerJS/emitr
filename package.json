@@ -5,6 +5,7 @@
   "homepage": "http://BladeRunnerJS.github.io/emitr",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^11.0.0",
     "chai": "^3.2.0",
     "fs-extra": "~0.6.3",
     "grunt": "0.4.x",
@@ -12,8 +13,7 @@
     "grunt-contrib-connect": "~0.1.2",
     "grunt-contrib-watch": "~0.2.0",
     "grunt-saucelabs": "8.3.x",
-    "mocha": "^2.2.5",
-    "webbuilder": "git://github.com/BladeRunnerJS/webbuilder.git"
+    "mocha": "^2.2.5"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,6 @@
   "scripts": {
     "test": "mocha test",
     "saucelabs-test": "grunt saucelabs-test",
-    "prepublish": "node build/package.js"
+    "prepublish": "browserify src/index.js -s emitr -o dist/emitr.js"
   }
 }

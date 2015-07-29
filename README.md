@@ -4,7 +4,7 @@ permalink: /index.html
 title: emitr
 ---
 
-<script type="text/javascript" src="target/single/emitr.js"></script>
+<script type="text/javascript" src="dist/emitr.js"></script>
 
 emitr
 =====
@@ -50,11 +50,11 @@ With Bower
 
 In the browser (better to take a copy of the file and serve it from within your app)
 
-    <script type="text/javascript" src="http://bladerunnerjs.github.io/emitr/target/single/emitr.js"></script>
+    <script type="text/javascript" src="http://bladerunnerjs.github.io/emitr/dist/emitr.js"></script>
 
 With require.js (again, better to take a copy and serve it within your app)
 
-    require(["http://bladerunnerjs.github.io/emitr/target/single/emitr.js"], function(emitr) {
+    require(["http://bladerunnerjs.github.io/emitr/dist/emitr.js"], function(emitr) {
         // do your thing with emitr
     });
 

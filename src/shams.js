@@ -1,3 +1,6 @@
+/*eslint no-proto:0*/
+'use strict';
+
 // Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////
 // When IE8 support is no longer needed, all these can be dropped in favour of the es5 methods.
 
@@ -6,7 +9,9 @@ exports.getPrototypeOf = function getPrototypeOf(obj) {
 		var proto = Object.getPrototypeOf(obj);
 
 		// to avoid bad shams...
-		if (proto !== obj) return proto;
+		if (proto !== obj) {
+			return proto;
+		}
 	}
 
 	// this is what most shams do, but sometimes it's wrong.
@@ -32,7 +37,9 @@ if (Object.defineProperty) {
 		// IE8 throws an error here.
 		Object.defineProperty({}, 'x', {});
 		defineProperty = Object.defineProperty;
-	} catch (e) {}
+	} catch (e) {
+		// do nothing
+	}
 }
 exports.defineProperty = defineProperty;
 
@@ -49,10 +56,10 @@ exports.create = function create(proto, descriptors) {
 			delete result.__proto__;
 		}
 	} else {
-		var myConstructor = function() {};
-		myConstructor.prototype = proto;
+		var MyConstructor = function() {};
+		MyConstructor.prototype = proto;
 
-		result = new myConstructor();
+		result = new MyConstructor();
 
 		var keys = Object.keys(descriptors);
 		for (var i = 0; i < keys.length; ++i) {

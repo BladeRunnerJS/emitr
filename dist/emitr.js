@@ -109,7 +109,7 @@ Emitter.prototype = {
 	 * @param {?Object} [context] An optional context that defines what 'this' should be inside the callback.
 	 */
 	once: function(eventIdentifier, callback, context) {
-		if (typeof callback !== 'function') { throw new TypeError("onnce: Illegal Argument: callback must be a function, was " + (typeof callback)); }
+		if (typeof callback !== 'function') { throw new TypeError("once: Illegal Argument: callback must be a function, was " + (typeof callback)); }
 
 		var off = this.off.bind(this), hasFired = false;
 
@@ -158,7 +158,7 @@ Emitter.prototype = {
 			// clear all listeners for a particular eventIdentifier.
 			if (this._emitterListeners.hasAny(eventIdentifier)) {
 				var listeners = this._emitterListeners.getValues(eventIdentifier);
-				this._emitterListeners['delete'](eventIdentifier);
+				this._emitterListeners.delete(eventIdentifier);
 				if (this._emitterMetaEventsOn === true) {
 					notifyRemoves(this, listeners);
 				}
@@ -170,7 +170,7 @@ Emitter.prototype = {
 			return this.clearListeners(context);
 		} else {
 			// clear a specific listener.
-			if (typeof callback !== 'function') { throw new TypeError("off: Illegal Argument: callback must be a function, was " + (typeof callback)); }
+			if (typeof callback !== 'function') { throw new TypeError('off: Illegal Argument: callback must be a function, was ' + (typeof callback)); }
 
 			var removedAListener = this._emitterListeners.removeLastMatch(eventIdentifier, function(record) {
 				var callbackToCompare = record.callback._onceFunctionMarker === ONCE_FUNCTION_MARKER ? record.callback._wrappedCallback : record.callback;
@@ -270,7 +270,7 @@ Emitter.mixInto = function(destination) {
 		// we would want to copy those methods/properties too.
 		//noinspection JSUnfilteredForInLoop
 		if (destination.hasOwnProperty(key)) {
-			throw new Error("Emitter.mixInto: Destination already has function " + key + " unable to mixin.");
+			throw new Error('Emitter.mixInto: Destination already has function ' + key + ' unable to mixin.');
 		}
 		//noinspection JSUnfilteredForInLoop
 		destination[key] = Emitter.prototype[key];
@@ -329,7 +329,7 @@ Event.extend = function inlineExtend(properties) {
 			enumerable: false, value: subclassConstructor
 		}
 	});
-	
+
 	//IE8 bug. https://developer.mozilla.org/en-US/docs/ECMAScript_DontEnum_attribute
 	if (subclassConstructor.prototype.constructor !== subclassConstructor) {
 		subclassConstructor.prototype.constructor = subclassConstructor;
@@ -480,7 +480,7 @@ MultiMap.prototype = {
 	},
 	'filterAll': function(filterFunction) {
 
-		//TODO: The following line can be removed and instead a third 'map' parameter 
+		//TODO: The following line can be removed and instead a third 'map' parameter
 		// can be added to the forEach callback once the following webkit bug is resovled
 		// https://bugs.webkit.org/show_bug.cgi?id=138563
 

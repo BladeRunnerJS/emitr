@@ -1,3 +1,6 @@
+/*eslint no-native-reassign:0*/
+'use strict';
+
 var Map = require('./Map');
 
 function MultiMap() {
@@ -33,14 +36,14 @@ MultiMap.prototype = {
 		var values = this._map.get(key).filter(filterFunction);
 
 		if (values.length === 0) {
-			this._map['delete'](key);
+			this._map.delete(key);
 		} else {
 			this._map.set(key, values);
 		}
 	},
 	'filterAll': function(filterFunction) {
 
-		//TODO: The following line can be removed and instead a third 'map' parameter 
+		//TODO: The following line can be removed and instead a third 'map' parameter
 		// can be added to the forEach callback once the following webkit bug is resovled
 		// https://bugs.webkit.org/show_bug.cgi?id=138563
 
@@ -48,7 +51,7 @@ MultiMap.prototype = {
 		this._map.forEach(function(values, key) {
 			var newValues = values.filter(filterFunction);
 			if (newValues.length === 0) {
-				map['delete'](key);
+				map.delete(key);
 			} else {
 				map.set(key, newValues);
 			}
@@ -69,7 +72,7 @@ MultiMap.prototype = {
 		return this._map.has(key);
 	},
 	'delete': function del(key) {
-		this._map['delete'](key);
+		this._map.delete(key);
 	}
 };
 

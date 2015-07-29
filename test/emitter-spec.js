@@ -1,11 +1,13 @@
-/*global describe, it, expect, require, beforeEach */
+'use strict';
 
 var chai = require('chai');
 var expect = chai.expect;
 
 describe('An Emitter', function(){
-	var global = (function() {return this;})();
-	var Emitter = global["emitr"] || require("..");
+	var global = (function() {
+		return this;
+	})();
+	var Emitter = (global && global.emitr) || require('..');
 
 	var emitter;
 
@@ -24,7 +26,7 @@ describe('An Emitter', function(){
 		expect(receivedEvent.event).to.equal('nobody-is-listening');
 		expect(receivedEvent.data.length).to.equal(2);
 		expect(receivedEvent.data[0]).to.equal('parm1');
-		expect(receivedEvent.data[1]).to.equal('parm2')
+		expect(receivedEvent.data[1]).to.equal('parm2');
 	});
 
 	describe('with a function registered for an event,', function() {
@@ -213,7 +215,7 @@ describe('An Emitter', function(){
 		var firstFired;
 		var secondFired;
 		function listenerThatRemovesItself() {
-			firstFired ++;
+			firstFired++;
 			emitter.off('event', listenerThatRemovesItself);
 		}
 		function otherListener() {
@@ -273,7 +275,7 @@ describe('An Emitter', function(){
 		});
 
 		it('when an instance of MyEvent is emitted then the listener will fire, receiving the event as the first argument.', function() {
-			emitter.trigger(new MyEvent(100, 120), "next argument");
+			emitter.trigger(new MyEvent(100, 120), 'next argument');
 
 			expect(receivedEvent).not.to.be.null;
 			expect(receivedEvent.x).to.equal(100);
@@ -311,7 +313,7 @@ describe('An Emitter', function(){
 			receivedEvent = null;
 			context = {};
 			alertTheMedia = function() {
-				throw new Error("this event doesn't actually occur during this test.");
+				throw new Error('this event doesn\'t actually occur during this test.');
 			};
 
 			emitter.on(Emitter.meta.AddListenerEvent, function(event) {
@@ -344,7 +346,7 @@ describe('An Emitter', function(){
 		});
 
 		function alertTheMedia() {
-			throw new Error("this event doesn't actually occur during this test.");
+			throw new Error('this event doesn\'t actually occur during this test.');
 		}
 
 		emitter.on('elvis-sighted', alertTheMedia);
@@ -368,10 +370,10 @@ describe('An Emitter', function(){
 			});
 
 			alertTheMedia = function() {
-				throw new Error("this event doesn't actually occur during this test - no need to alertTheMedia.");
+				throw new Error('this event doesn\'t actually occur during this test - no need to alertTheMedia.');
 			};
 			scrambleTheJets = function() {
-				throw new Error("this event doesn't actually occur during this test - no need to scrambleTheJets.");
+				throw new Error('this event doesn\'t actually occur during this test - no need to scrambleTheJets.');
 			};
 
 			emitter.on('elvis-sighted', alertTheMedia, context);
@@ -400,7 +402,7 @@ describe('An Emitter', function(){
 					removeListenerSpotted = true;
 				} else {
 					// there shouldn't be any others.
-					throw new Error('Unexpected event : ' + event + ' in ' + receivedEvents.join(", "));
+					throw new Error('Unexpected event : ' + event + ' in ' + receivedEvents.join(', '));
 				}
 			}
 		});
@@ -449,7 +451,7 @@ describe('An Emitter', function(){
 			emitter.trigger('tricksy');
 		});
 		emitter.on('tricksy', function() {
-			called ++;
+			called++;
 		});
 
 		emitter.trigger('tricksy');
@@ -461,7 +463,7 @@ describe('An Emitter', function(){
 	it('should trigger all listeners even if one throws an exception', function() {
 		var called = false;
 		emitter.on('ev', function() {
-			throw "error";
+			throw 'error';
 		});
 		emitter.on('ev', function() {
 			called = true;

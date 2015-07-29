@@ -1,16 +1,18 @@
+'use strict';
+
 // A conversion of some of the backbone event tests.
 // removed event maps, once, all, triggering many events at once,
 //    listening to many events at once, chaining
 // We can implement these features and tests later if required.
 
-/*global require, describe, beforeEach, it, expect*/
-
 var chai = require('chai');
 var expect = chai.expect;
 
 describe('A backbone-like Emitter,', function() {
-	var global = (function() {return this;})();
-	var Emitter = global["emitr"] || require("..");
+	var global = (function() {
+		return this;
+	})();
+	var Emitter = (global && global.emitr) || require('..');
 
 	var emitter;
 	var MyEmitter;

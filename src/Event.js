@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var shams = require('./shams');
 // Event ///////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ var Event = function() {};
  */
 Event.extend = function inlineExtend(properties) {
 	var superclass = this, subclassConstructor;
-	if (typeof superclass !== 'function') { throw new TypeError("extend: Superclass must be a constructor function, was a " + typeof superclass); }
+	if (typeof superclass !== 'function') { throw new TypeError('extend: Superclass must be a constructor function, was a ' + typeof superclass); }
 
 	if (typeof properties === 'function') {
 		subclassConstructor = properties;
@@ -47,7 +47,7 @@ Event.extend = function inlineExtend(properties) {
 			enumerable: false, value: subclassConstructor
 		}
 	});
-	
+
 	//IE8 bug. https://developer.mozilla.org/en-US/docs/ECMAScript_DontEnum_attribute
 	if (subclassConstructor.prototype.constructor !== subclassConstructor) {
 		subclassConstructor.prototype.constructor = subclassConstructor;
@@ -55,7 +55,7 @@ Event.extend = function inlineExtend(properties) {
 
 	if (typeof properties === 'object') {
 		if (shams.getPrototypeOf(properties) !== Object.prototype) {
-			throw new Error("extend: Can't extend something that already has a prototype chain.");
+			throw new Error('extend: Can\'t extend something that already has a prototype chain.');
 		}
 		for (var instanceProperty in properties) {
 			if (instanceProperty !== 'constructor' && properties.hasOwnProperty(instanceProperty)) {
@@ -82,10 +82,10 @@ Event.prototype.toString = function() {
 		//noinspection JSUnfilteredForInLoop
 		if (typeof result[key] !== 'function') {
 			//noinspection JSUnfilteredForInLoop
-			result.push(key + ": " + this[key] + ",");
+			result.push(key + ': ' + this[key] + ',');
 		}
 	}
-	return result.join(" ");
+	return result.join(' ');
 };
 
 module.exports = Event;

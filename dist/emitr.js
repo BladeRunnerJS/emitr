@@ -1,5 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.emitr = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var slice = Array.prototype.slice;
 
@@ -19,7 +19,9 @@ function notify(listeners, args) {
 		var listener = listeners[i];
 		try {
 			listener.callback.apply(listener.context, args);
-		} catch(e) {}
+		} catch(e) {
+			// do nothing
+		}
 	}
 	return true;
 }
@@ -48,7 +50,7 @@ function notifyRemoves(emitter, listenerRecords) {
 function Emitter() {
 	this._emitterListeners = new MultiMap();
 	this._emitterMetaEventsOn = false;
-};
+}
 
 Emitter.prototype = {
 	/**
@@ -62,7 +64,7 @@ Emitter.prototype = {
 	 * @param {?Object} [context] An optional context that defines what 'this' should be inside the callback.
 	 */
 	on: function listen(eventIdentifier, callback, context) {
-		if (typeof callback !== 'function') { throw new TypeError("on: Illegal Argument: callback must be a function, was " + (typeof callback)); }
+		if (typeof callback !== 'function') { throw new TypeError('on: Illegal Argument: callback must be a function, was ' + (typeof callback)); }
 
 		// This allows us to work even if the constructor hasn't been called.  Useful for mixins.
 		if (this._emitterListeners === undefined) {
@@ -109,7 +111,7 @@ Emitter.prototype = {
 	 * @param {?Object} [context] An optional context that defines what 'this' should be inside the callback.
 	 */
 	once: function(eventIdentifier, callback, context) {
-		if (typeof callback !== 'function') { throw new TypeError("once: Illegal Argument: callback must be a function, was " + (typeof callback)); }
+		if (typeof callback !== 'function') { throw new TypeError('once: Illegal Argument: callback must be a function, was ' + (typeof callback)); }
 
 		var off = this.off.bind(this), hasFired = false;
 
@@ -280,7 +282,7 @@ Emitter.mixInto = function(destination) {
 module.exports = Emitter;
 
 },{"./MultiMap":4,"./events":5,"./shams":7}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var shams = require('./shams');
 // Event ///////////////////////////////////////////////////////////////////////////////////////////
@@ -312,7 +314,7 @@ var Event = function() {};
  */
 Event.extend = function inlineExtend(properties) {
 	var superclass = this, subclassConstructor;
-	if (typeof superclass !== 'function') { throw new TypeError("extend: Superclass must be a constructor function, was a " + typeof superclass); }
+	if (typeof superclass !== 'function') { throw new TypeError('extend: Superclass must be a constructor function, was a ' + typeof superclass); }
 
 	if (typeof properties === 'function') {
 		subclassConstructor = properties;
@@ -337,7 +339,7 @@ Event.extend = function inlineExtend(properties) {
 
 	if (typeof properties === 'object') {
 		if (shams.getPrototypeOf(properties) !== Object.prototype) {
-			throw new Error("extend: Can't extend something that already has a prototype chain.");
+			throw new Error('extend: Can\'t extend something that already has a prototype chain.');
 		}
 		for (var instanceProperty in properties) {
 			if (instanceProperty !== 'constructor' && properties.hasOwnProperty(instanceProperty)) {
@@ -364,17 +366,19 @@ Event.prototype.toString = function() {
 		//noinspection JSUnfilteredForInLoop
 		if (typeof result[key] !== 'function') {
 			//noinspection JSUnfilteredForInLoop
-			result.push(key + ": " + this[key] + ",");
+			result.push(key + ': ' + this[key] + ',');
 		}
 	}
-	return result.join(" ");
+	return result.join(' ');
 };
 
 module.exports = Event;
-},{"./shams":7}],3:[function(require,module,exports){
-"use strict";
 
-var global = Function("return this")();
+},{"./shams":7}],3:[function(require,module,exports){
+/*eslint no-native-reassign:0*/
+'use strict';
+
+var global = Function('return this')();
 
 var Map = global.Map;
 
@@ -437,7 +441,11 @@ if (Map === undefined || Map.prototype.forEach === undefined) {
 }
 
 module.exports = Map;
+
 },{}],4:[function(require,module,exports){
+/*eslint no-native-reassign:0*/
+'use strict';
+
 var Map = require('./Map');
 
 function MultiMap() {
@@ -473,7 +481,7 @@ MultiMap.prototype = {
 		var values = this._map.get(key).filter(filterFunction);
 
 		if (values.length === 0) {
-			this._map['delete'](key);
+			this._map.delete(key);
 		} else {
 			this._map.set(key, values);
 		}
@@ -488,7 +496,7 @@ MultiMap.prototype = {
 		this._map.forEach(function(values, key) {
 			var newValues = values.filter(filterFunction);
 			if (newValues.length === 0) {
-				map['delete'](key);
+				map.delete(key);
 			} else {
 				map.set(key, newValues);
 			}
@@ -509,13 +517,14 @@ MultiMap.prototype = {
 		return this._map.has(key);
 	},
 	'delete': function del(key) {
-		this._map['delete'](key);
+		this._map.delete(key);
 	}
 };
 
 module.exports = MultiMap;
+
 },{"./Map":3}],5:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var Event = require('./Event');
 
@@ -601,7 +610,11 @@ module.exports = {
 module.exports = require('./Emitter');
 module.exports.meta = require('./events');
 module.exports.Event = require('./Event');
+
 },{"./Emitter":1,"./Event":2,"./events":5}],7:[function(require,module,exports){
+/*eslint no-proto:0*/
+'use strict';
+
 // Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////
 // When IE8 support is no longer needed, all these can be dropped in favour of the es5 methods.
 
@@ -610,7 +623,9 @@ exports.getPrototypeOf = function getPrototypeOf(obj) {
 		var proto = Object.getPrototypeOf(obj);
 
 		// to avoid bad shams...
-		if (proto !== obj) return proto;
+		if (proto !== obj) {
+			return proto;
+		}
 	}
 
 	// this is what most shams do, but sometimes it's wrong.
@@ -636,7 +651,9 @@ if (Object.defineProperty) {
 		// IE8 throws an error here.
 		Object.defineProperty({}, 'x', {});
 		defineProperty = Object.defineProperty;
-	} catch (e) {}
+	} catch (e) {
+		// do nothing
+	}
 }
 exports.defineProperty = defineProperty;
 
@@ -653,10 +670,10 @@ exports.create = function create(proto, descriptors) {
 			delete result.__proto__;
 		}
 	} else {
-		var myConstructor = function() {};
-		myConstructor.prototype = proto;
+		var MyConstructor = function() {};
+		MyConstructor.prototype = proto;
 
-		result = new myConstructor();
+		result = new MyConstructor();
 
 		var keys = Object.keys(descriptors);
 		for (var i = 0; i < keys.length; ++i) {

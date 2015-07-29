@@ -1,4 +1,4 @@
-// emitr built for browser 2015-07-29T09:39:48.056Z
+// emitr built for browser 2015-07-29T10:10:24.700Z
 ;(function (name, factory) {
 	if (typeof module === 'object') {
 		// Does not work with strict CommonJS, but only CommonJS-like environments
@@ -97,14 +97,14 @@
 	var _define = defaultRealm.define;
 
 	_define("emitr", function(require, exports, module) {
-		module.exports = require("./lib/index");
+		module.exports = require("./src/index");
 	});
-	_define("emitr/lib/index", function(require, exports, module) {
+	_define("emitr/src/index", function(require, exports, module) {
 		module.exports = require('./Emitter');
 		module.exports.meta = require('./events');
 		module.exports.Event = require('./Event');
 	});
-	_define("emitr/lib/Emitter", function(require, exports, module) {
+	_define("emitr/src/Emitter", function(require, exports, module) {
 		"use strict";
 		
 		var slice = Array.prototype.slice;
@@ -386,7 +386,7 @@
 		module.exports = Emitter;
 		
 	});
-	_define("emitr/lib/events", function(require, exports, module) {
+	_define("emitr/src/events", function(require, exports, module) {
 		"use strict";
 		
 		var Event = require('./Event');
@@ -470,7 +470,7 @@
 		};
 		
 	});
-	_define("emitr/lib/Event", function(require, exports, module) {
+	_define("emitr/src/Event", function(require, exports, module) {
 		"use strict";
 		
 		var shams = require('./shams');
@@ -563,7 +563,7 @@
 		
 		module.exports = Event;
 	});
-	_define("emitr/lib/shams", function(require, exports, module) {
+	_define("emitr/src/shams", function(require, exports, module) {
 		// Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////
 		// When IE8 support is no longer needed, all these can be dropped in favour of the es5 methods.
 		
@@ -631,7 +631,7 @@
 		};
 		
 	});
-	_define("emitr/lib/MultiMap", function(require, exports, module) {
+	_define("emitr/src/MultiMap", function(require, exports, module) {
 		var Map = require('./Map');
 		
 		function MultiMap() {
@@ -709,7 +709,7 @@
 		
 		module.exports = MultiMap;
 	});
-	_define("emitr/lib/Map", function(require, exports, module) {
+	_define("emitr/src/Map", function(require, exports, module) {
 		"use strict";
 		
 		var global = Function("return this")();

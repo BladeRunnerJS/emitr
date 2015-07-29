@@ -1,13 +1,97 @@
-// emitr built for bundle module system 2015-07-29T09:39:48.056Z
+// emitr built for bundle module system 2015-07-29T10:10:24.700Z
 define("emitr", function(require, exports, module) {
-	module.exports = require("./lib/index");
+	module.exports = require("./src/index");
 });
-define("emitr/lib/index", function(require, exports, module) {
+define("emitr/src/index", function(require, exports, module) {
 	module.exports = require('./Emitter');
 	module.exports.meta = require('./events');
 	module.exports.Event = require('./Event');
 });
-define("emitr/lib/Emitter", function(require, exports, module) {
+define("emitr/src/events", function(require, exports, module) {
+	"use strict";
+	
+	var Event = require('./Event');
+	
+	var MetaEvent = Event.extend(
+			/**
+			 * @memberOf Emitter.meta
+			 * @class MetaEvent
+			 * @param {*} event The event this MetaEvent is about
+			 * @classdesc
+			 * A parent class for all meta events.
+			 */
+					function(event) {
+				/**
+				 * Event provides the identifier of the event that this MetaEvent is about.
+				 * @name Emitter.meta.MetaEvent#event
+				 * @type {*}
+				 */
+				this.event = event;
+			}
+	);
+	/**
+	 * @memberOf Emitter.meta
+	 * @extends Emitter.meta.MetaEvent
+	 * @class ListenerEvent
+	 * @classdesc
+	 * A parent class for all MetaEvents about listeners.
+	 */
+	var ListenerEvent = MetaEvent.extend(
+			function(event, listener, context) {
+				MetaEvent.call(this, event);
+				/**
+				 * The listener this ListenerEvent is about.
+				 * @name Emitter.meta.ListenerEvent#listener
+				 * @type {function}
+				 */
+				this.listener = listener;
+				/**
+				 * The context associated with the listener.
+				 * @name Emitter.meta.ListenerEvent#context
+				 * @type {?object}
+				 */
+				this.context = context;
+			}
+	);
+	/**
+	 * @memberOf Emitter.meta
+	 * @class AddListenerEvent
+	 * @extends Emitter.meta.ListenerEvent
+	 */
+	var AddListenerEvent = ListenerEvent.extend();
+	/**
+	 * @memberOf Emitter.meta
+	 * @class RemoveListenerEvent
+	 * @extends Emitter.meta.ListenerEvent
+	 */
+	var RemoveListenerEvent = ListenerEvent.extend();
+	/**
+	 * @memberOf Emitter.meta
+	 * @class DeadEvent
+	 * @extends Emitter.meta.MetaEvent
+	 */
+	var DeadEvent = MetaEvent.extend(
+			function(event, args) {
+				MetaEvent.call(this, event);
+				this.data = args;
+			}
+	);
+	
+	/**
+	 * Where the meta events live.
+	 * @memberOf Emitter
+	 * @namespace meta
+	 */
+	module.exports = {
+		MetaEvent: MetaEvent,
+		ListenerEvent: ListenerEvent,
+		AddListenerEvent: AddListenerEvent,
+		RemoveListenerEvent: RemoveListenerEvent,
+		DeadEvent: DeadEvent
+	};
+	
+});
+define("emitr/src/Emitter", function(require, exports, module) {
 	"use strict";
 	
 	var slice = Array.prototype.slice;
@@ -289,91 +373,7 @@ define("emitr/lib/Emitter", function(require, exports, module) {
 	module.exports = Emitter;
 	
 });
-define("emitr/lib/events", function(require, exports, module) {
-	"use strict";
-	
-	var Event = require('./Event');
-	
-	var MetaEvent = Event.extend(
-			/**
-			 * @memberOf Emitter.meta
-			 * @class MetaEvent
-			 * @param {*} event The event this MetaEvent is about
-			 * @classdesc
-			 * A parent class for all meta events.
-			 */
-					function(event) {
-				/**
-				 * Event provides the identifier of the event that this MetaEvent is about.
-				 * @name Emitter.meta.MetaEvent#event
-				 * @type {*}
-				 */
-				this.event = event;
-			}
-	);
-	/**
-	 * @memberOf Emitter.meta
-	 * @extends Emitter.meta.MetaEvent
-	 * @class ListenerEvent
-	 * @classdesc
-	 * A parent class for all MetaEvents about listeners.
-	 */
-	var ListenerEvent = MetaEvent.extend(
-			function(event, listener, context) {
-				MetaEvent.call(this, event);
-				/**
-				 * The listener this ListenerEvent is about.
-				 * @name Emitter.meta.ListenerEvent#listener
-				 * @type {function}
-				 */
-				this.listener = listener;
-				/**
-				 * The context associated with the listener.
-				 * @name Emitter.meta.ListenerEvent#context
-				 * @type {?object}
-				 */
-				this.context = context;
-			}
-	);
-	/**
-	 * @memberOf Emitter.meta
-	 * @class AddListenerEvent
-	 * @extends Emitter.meta.ListenerEvent
-	 */
-	var AddListenerEvent = ListenerEvent.extend();
-	/**
-	 * @memberOf Emitter.meta
-	 * @class RemoveListenerEvent
-	 * @extends Emitter.meta.ListenerEvent
-	 */
-	var RemoveListenerEvent = ListenerEvent.extend();
-	/**
-	 * @memberOf Emitter.meta
-	 * @class DeadEvent
-	 * @extends Emitter.meta.MetaEvent
-	 */
-	var DeadEvent = MetaEvent.extend(
-			function(event, args) {
-				MetaEvent.call(this, event);
-				this.data = args;
-			}
-	);
-	
-	/**
-	 * Where the meta events live.
-	 * @memberOf Emitter
-	 * @namespace meta
-	 */
-	module.exports = {
-		MetaEvent: MetaEvent,
-		ListenerEvent: ListenerEvent,
-		AddListenerEvent: AddListenerEvent,
-		RemoveListenerEvent: RemoveListenerEvent,
-		DeadEvent: DeadEvent
-	};
-	
-});
-define("emitr/lib/Event", function(require, exports, module) {
+define("emitr/src/Event", function(require, exports, module) {
 	"use strict";
 	
 	var shams = require('./shams');
@@ -466,7 +466,7 @@ define("emitr/lib/Event", function(require, exports, module) {
 	
 	module.exports = Event;
 });
-define("emitr/lib/shams", function(require, exports, module) {
+define("emitr/src/shams", function(require, exports, module) {
 	// Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////
 	// When IE8 support is no longer needed, all these can be dropped in favour of the es5 methods.
 	
@@ -534,7 +534,7 @@ define("emitr/lib/shams", function(require, exports, module) {
 	};
 	
 });
-define("emitr/lib/MultiMap", function(require, exports, module) {
+define("emitr/src/MultiMap", function(require, exports, module) {
 	var Map = require('./Map');
 	
 	function MultiMap() {
@@ -612,7 +612,7 @@ define("emitr/lib/MultiMap", function(require, exports, module) {
 	
 	module.exports = MultiMap;
 });
-define("emitr/lib/Map", function(require, exports, module) {
+define("emitr/src/Map", function(require, exports, module) {
 	"use strict";
 	
 	var global = Function("return this")();

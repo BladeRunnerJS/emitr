@@ -14,7 +14,7 @@ A simple emitter for node and the browser.
 [![Build Status](https://travis-ci.org/BladeRunnerJS/emitr.png)](https://travis-ci.org/BladeRunnerJS/emitr)
 
 * This document is available nicely formatted [here](http://BladeRunnerJS.github.io/emitr).
-* Tests are [here](http://BladeRunnerJS.github.io/emitr/spec).
+* Tests are [here](http://BladeRunnerJS.github.io/emitr/test).
 * Source code is [here](https://github.com/BladeRunnerJS/emitr).
 
 The rendered form of this document includes the Emitter script so you can open a console and try it

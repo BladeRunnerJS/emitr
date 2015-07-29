@@ -5,15 +5,15 @@
   "homepage": "http://BladeRunnerJS.github.io/emitr",
   "license": "MIT",
   "devDependencies": {
-    "webbuilder": "git://github.com/BladeRunnerJS/webbuilder.git",
-    "jshamcrest": "0.7.x",
-    "jasmine-node": "1.14.x",
+    "chai": "^3.2.0",
     "fs-extra": "~0.6.3",
     "grunt": "0.4.x",
     "grunt-cli": "0.1.x",
-    "grunt-saucelabs": "8.3.x",
     "grunt-contrib-connect": "~0.1.2",
-    "grunt-contrib-watch": "~0.2.0"
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-saucelabs": "8.3.x",
+    "mocha": "^2.2.5",
+    "webbuilder": "git://github.com/BladeRunnerJS/webbuilder.git"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "test": "jasmine-node --verbose test",
+    "test": "mocha test",
     "saucelabs-test": "grunt saucelabs-test",
     "prepublish": "node build/package.js"
   }

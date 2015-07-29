@@ -1,5 +1,8 @@
 /*global describe, it, expect, require, beforeEach */
 
+var chai = require('chai');
+var expect = chai.expect;
+
 describe('An Emitter', function(){
 	var global = (function() {return this;})();
 	var Emitter = global["emitr"] || require("..");
@@ -17,11 +20,11 @@ describe('An Emitter', function(){
 		});
 		emitter.trigger('nobody-is-listening', 'parm1', 'parm2');
 
-		expect(receivedEvent).not.toBe(null);
-		expect(receivedEvent.event).toBe('nobody-is-listening');
-		expect(receivedEvent.data.length).toBe(2);
-		expect(receivedEvent.data[0]).toBe('parm1');
-		expect(receivedEvent.data[1]).toBe('parm2')
+		expect(receivedEvent).not.to.be.null;
+		expect(receivedEvent.event).to.equal('nobody-is-listening');
+		expect(receivedEvent.data.length).to.equal(2);
+		expect(receivedEvent.data[0]).to.equal('parm1');
+		expect(receivedEvent.data[1]).to.equal('parm2')
 	});
 
 	describe('with a function registered for an event,', function() {
@@ -38,7 +41,7 @@ describe('An Emitter', function(){
 
 		it('when the event is emitted, then the function should be called.', function() {
 			emitter.trigger('event');
-			expect(called).toBe(true);
+			expect(called).to.be.true;
 		});
 
 		it('when the same function is registered for the same event, then it throws an error.', function() {
@@ -48,17 +51,17 @@ describe('An Emitter', function(){
 			} catch (e) {
 				err = e;
 			}
-			expect(err).toNotBe(null);
+			expect(err).to.not.be.null;
 		});
 
 		it('when the event is emitted with parameters, then the function should be called with those parameters.', function() {
 			emitter.trigger('event', true, false, 1, 2, 3, null);
-			expect(Array.prototype.slice.call(args)).toEqual([true, false, 1, 2, 3, null]);
+			expect(Array.prototype.slice.call(args)).to.deep.equal([true, false, 1, 2, 3, null]);
 		});
 
 		it('when a different event is emitted, then the function should not be called.', function() {
 			emitter.trigger('other event');
-			expect(called).toBe(false);
+			expect(called).to.be.false;
 		});
 
 		describe('and then removed,', function() {
@@ -68,7 +71,7 @@ describe('An Emitter', function(){
 
 			it('when the event is emitted, the function should not be called.', function() {
 				emitter.trigger('event');
-				expect(called).toBe(false);
+				expect(called).to.be.false;
 			});
 		});
 
@@ -79,7 +82,7 @@ describe('An Emitter', function(){
 
 			it('then the remove should have no effect.', function() {
 				emitter.trigger('event');
-				expect(called).toBe(true);
+				expect(called).to.be.true;
 			});
 		});
 
@@ -99,7 +102,7 @@ describe('An Emitter', function(){
 
 		it('when the event is emitted, then the listener with context should be called with the context set.', function() {
 			emitter.trigger('event');
-			expect(listenerObject.called).toBe(true);
+			expect(listenerObject.called).to.be.true;
 		});
 
 		describe('and then removed,', function() {
@@ -109,7 +112,7 @@ describe('An Emitter', function(){
 
 			it('when the event is emitted, the function should not be called.', function() {
 				emitter.trigger('event');
-				expect(listenerObject.called).toBe(false);
+				expect(listenerObject.called).to.be.false;
 			});
 		});
 
@@ -120,7 +123,7 @@ describe('An Emitter', function(){
 
 			it('then the remove should have no effect.', function() {
 				emitter.trigger('event');
-				expect(listenerObject.called).toBe(true);
+				expect(listenerObject.called).to.be.true;
 			});
 		});
 	});
@@ -157,10 +160,10 @@ describe('An Emitter', function(){
 				emitter.trigger('event');
 				emitter.trigger('event2');
 
-				expect(listenerObject.called1).toBe(true);
-				expect(listenerObject.called2).toBe(true);
-				expect(called1).toBe(true);
-				expect(called2).toBe(true);
+				expect(listenerObject.called1).to.be.true;
+				expect(listenerObject.called2).to.be.true;
+				expect(called1).to.be.true;
+				expect(called2).to.be.true;
 			});
 
 			it('when clearListeners is called with the context, both listeners with context should be cleared and the others shouldn\'t be.', function() {
@@ -168,10 +171,10 @@ describe('An Emitter', function(){
 				emitter.trigger('event');
 				emitter.trigger('event2');
 
-				expect(listenerObject.called1).toBe(false);
-				expect(listenerObject.called2).toBe(false);
-				expect(called1).toBe(true);
-				expect(called2).toBe(true);
+				expect(listenerObject.called1).to.be.false;
+				expect(listenerObject.called2).to.be.false;
+				expect(called1).to.be.true;
+				expect(called2).to.be.true;
 			});
 
 			it('when off is called without any parameters, all listeners should be cleared.', function() {
@@ -179,10 +182,10 @@ describe('An Emitter', function(){
 				emitter.trigger('event');
 				emitter.trigger('event2');
 
-				expect(listenerObject.called1).toBe(false);
-				expect(listenerObject.called2).toBe(false);
-				expect(called1).toBe(false);
-				expect(called2).toBe(false);
+				expect(listenerObject.called1).to.be.false;
+				expect(listenerObject.called2).to.be.false;
+				expect(called1).to.be.false;
+				expect(called2).to.be.false;
 			});
 		});
 	}
@@ -200,7 +203,7 @@ describe('An Emitter', function(){
 		});
 
 		it('should remain an instance of its own class.', function() {
-			expect(emitter instanceof MyObject).toBe(true);
+			expect(emitter instanceof MyObject).to.be.true;
 		});
 
 		fourListenerScenario();
@@ -225,11 +228,11 @@ describe('An Emitter', function(){
 
 		it('when the event fires the first time both listeners receive it, but the second time, only the one that doesn\'t remove itself receives it', function() {
 			emitter.trigger('event');
-			expect(firstFired).toBe(1);
-			expect(secondFired).toBe(1);
+			expect(firstFired).to.equal(1);
+			expect(secondFired).to.equal(1);
 			emitter.trigger('event');
-			expect(firstFired).toBe(1);
-			expect(secondFired).toBe(2);
+			expect(firstFired).to.equal(1);
+			expect(secondFired).to.equal(2);
 		});
 
 		describe('and a third listener which removes all listeners when fired', function() {
@@ -241,12 +244,12 @@ describe('An Emitter', function(){
 			});
 			it('when the event fires the second time, no listener receives it.', function() {
 				emitter.trigger('event');
-				expect(firstFired).toBe(1);
-				expect(secondFired).toBe(1);
+				expect(firstFired).to.equal(1);
+				expect(secondFired).to.equal(1);
 
 				emitter.trigger('event');
-				expect(firstFired).toBe(1);
-				expect(secondFired).toBe(1);
+				expect(firstFired).to.equal(1);
+				expect(secondFired).to.equal(1);
 			});
 		});
 	});
@@ -272,11 +275,11 @@ describe('An Emitter', function(){
 		it('when an instance of MyEvent is emitted then the listener will fire, receiving the event as the first argument.', function() {
 			emitter.trigger(new MyEvent(100, 120), "next argument");
 
-			expect(receivedEvent).not.toBeNull();
-			expect(receivedEvent.x).toBe(100);
-			expect(receivedEvent.y).toBe(120);
-			expect(receivedEvent instanceof MyEvent).toBe(true);
-			expect(nextArg).toBe("next argument");
+			expect(receivedEvent).not.to.be.null;
+			expect(receivedEvent.x).to.equal(100);
+			expect(receivedEvent.y).to.equal(120);
+			expect(receivedEvent instanceof MyEvent).to.be.true;
+			expect(nextArg).to.equal('next argument');
 		});
 
 		it('when a subclass of MyEvent is emitted, then the listener will fire, receiving the event as the first argument.', function() {
@@ -292,11 +295,11 @@ describe('An Emitter', function(){
 
 			emitter.trigger(new SubClassEvent());
 
-			expect(receivedEvent).not.toBeNull();
-			expect(receivedEvent.x).toBe(99);
-			expect(receivedEvent.y).toBe(119);
-			expect(receivedEvent instanceof MyEvent).toBe(true);
-			expect(receivedEvent instanceof SubClassEvent).toBe(true);
+			expect(receivedEvent).not.to.be.null;
+			expect(receivedEvent.x).to.equal(99);
+			expect(receivedEvent.y).to.equal(119);
+			expect(receivedEvent instanceof MyEvent).to.be.true;
+			expect(receivedEvent instanceof SubClassEvent).to.be.true;
 		});
 
 	});
@@ -317,10 +320,10 @@ describe('An Emitter', function(){
 		});
 
 		function verifyAddListenerEvent() {
-			expect(receivedEvent instanceof Emitter.meta.AddListenerEvent).toBe(true);
-			expect(receivedEvent.event).toBe('elvis-sighted');
-			expect(receivedEvent.listener).toBe(alertTheMedia);
-			expect(receivedEvent.context).toBe(context);
+			expect(receivedEvent instanceof Emitter.meta.AddListenerEvent).to.be.true;
+			expect(receivedEvent.event).to.equal('elvis-sighted');
+			expect(receivedEvent.listener).to.equal(alertTheMedia);
+			expect(receivedEvent.context).to.equal(context);
 		}
 
 		it('when another listener is registered, it should fire the listener.', function() {
@@ -347,10 +350,10 @@ describe('An Emitter', function(){
 		emitter.on('elvis-sighted', alertTheMedia);
 		emitter.off('elvis-sighted', alertTheMedia);
 
-		expect(receivedEvent instanceof Emitter.meta.RemoveListenerEvent).toBe(true);
-		expect(receivedEvent.event).toBe('elvis-sighted');
-		expect(receivedEvent.listener).toBe(alertTheMedia);
-		expect(receivedEvent.context).toBe(undefined);
+		expect(receivedEvent instanceof Emitter.meta.RemoveListenerEvent).to.be.true;
+		expect(receivedEvent.event).to.equal('elvis-sighted');
+		expect(receivedEvent.listener).to.equal(alertTheMedia);
+		expect(receivedEvent.context).to.be.undefined;
 	});
 
 	describe('with two listeners registered for two different events and a listener registered for the RemoveListenerEvent,', function() {
@@ -378,21 +381,21 @@ describe('An Emitter', function(){
 		it('when all listeners are removed, it should trigger RemoveListenerEvents for every listener.', function() {
 			emitter.off();
 
-			expect(receivedEvents.length).toBe(3); // because we removed ourself too.
+			expect(receivedEvents.length).to.equal(3); // because we removed ourself too.
 			var elvisSpotterRemoved = false;
 			var warWithEurasiaSpotterRemoved = false;
 			var removeListenerSpotted = false;
 			for (var i = 0; i < receivedEvents.length; ++i) {
 				var event = receivedEvents[i];
-				expect(event instanceof Emitter.meta.RemoveListenerEvent).toBe(true);
+				expect(event instanceof Emitter.meta.RemoveListenerEvent).to.be.true;
 				if (elvisSpotterRemoved === false && event.event === 'elvis-sighted') {
 					elvisSpotterRemoved = true;
-					expect(event.listener).toBe(alertTheMedia);
-					expect(event.context).toBe(context);
+					expect(event.listener).to.equal(alertTheMedia);
+					expect(event.context).to.equal(context);
 				} else if (warWithEurasiaSpotterRemoved === false && event.event === 'war-with-eurasia') {
 					warWithEurasiaSpotterRemoved = true;
-					expect(event.listener).toBe(scrambleTheJets);
-					expect(event.context).toBe(context);
+					expect(event.listener).to.equal(scrambleTheJets);
+					expect(event.context).to.equal(context);
 				} else if (removeListenerSpotted === false && event.event === Emitter.meta.RemoveListenerEvent) {
 					removeListenerSpotted = true;
 				} else {
@@ -405,29 +408,29 @@ describe('An Emitter', function(){
 		it('when listeners for a particular event are removed, it should trigger a RemoveListenerEvent for the removed listeners.', function() {
 			emitter.off('war-with-eurasia');
 
-			expect(receivedEvents.length).toBe(1);
-			expect(receivedEvents[0].event).toBe('war-with-eurasia');
-			expect(receivedEvents[0].listener).toBe(scrambleTheJets);
-			expect(receivedEvents[0].context).toBe(context);
+			expect(receivedEvents.length).to.equal(1);
+			expect(receivedEvents[0].event).to.equal('war-with-eurasia');
+			expect(receivedEvents[0].listener).to.equal(scrambleTheJets);
+			expect(receivedEvents[0].context).to.equal(context);
 		});
 
 		it('when listeners for a particular context are removed, it should trigger RemoveListenerEvents for the removed listeners.', function() {
 			emitter.clearListeners(context);
 
-			expect(receivedEvents.length).toBe(2);
+			expect(receivedEvents.length).to.equal(2);
 			var elvisSpotterRemoved = false;
 			var warWithEurasiaSpotterRemoved = false;
 			for (var i = 0; i < receivedEvents.length; ++i) {
 				var event = receivedEvents[i];
-				expect(event instanceof Emitter.meta.RemoveListenerEvent).toBe(true);
+				expect(event instanceof Emitter.meta.RemoveListenerEvent).to.be.true;
 				if (elvisSpotterRemoved === false && event.event === 'elvis-sighted') {
 					elvisSpotterRemoved = true;
-					expect(event.listener).toBe(alertTheMedia);
-					expect(event.context).toBe(context);
+					expect(event.listener).to.equal(alertTheMedia);
+					expect(event.context).to.equal(context);
 				} else if (warWithEurasiaSpotterRemoved === false && event.event === 'war-with-eurasia') {
 					warWithEurasiaSpotterRemoved = true;
-					expect(event.listener).toBe(scrambleTheJets);
-					expect(event.context).toBe(context);
+					expect(event.listener).to.equal(scrambleTheJets);
+					expect(event.context).to.equal(context);
 				} else {
 					// there shouldn't be any others.
 					throw new Error('Unexpected event : ' + event);
@@ -452,7 +455,7 @@ describe('An Emitter', function(){
 		emitter.trigger('tricksy');
 		emitter.trigger('tricksy');
 
-		expect(called).toBe(4);
+		expect(called).to.equal(4);
 	});
 
 	it('should trigger all listeners even if one throws an exception', function() {
@@ -466,6 +469,6 @@ describe('An Emitter', function(){
 
 		emitter.trigger('ev');
 
-		expect(called).toBe(true);
+		expect(called).to.be.true;
 	});
 });

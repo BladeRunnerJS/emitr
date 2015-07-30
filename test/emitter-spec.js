@@ -1,14 +1,10 @@
 'use strict';
 
+var Emitter = require('..');
 var chai = require('chai');
 var expect = chai.expect;
 
 describe('An Emitter', function(){
-	var global = (function() {
-		return this;
-	})();
-	var Emitter = (global && global.emitr) || require('..');
-
 	var emitter;
 
 	beforeEach(function() {

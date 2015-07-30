@@ -5,15 +5,11 @@
 //    listening to many events at once, chaining
 // We can implement these features and tests later if required.
 
+var Emitter = require('..');
 var chai = require('chai');
 var expect = chai.expect;
 
 describe('A backbone-like Emitter,', function() {
-	var global = (function() {
-		return this;
-	})();
-	var Emitter = (global && global.emitr) || require('..');
-
 	var emitter;
 	var MyEmitter;
 

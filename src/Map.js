@@ -1,8 +1,6 @@
 /*eslint no-native-reassign:0*/
 'use strict';
 
-var global = Function('return this')();
-
 var Map = global.Map;
 
 // Uses a map for string keys and two arrays for nonstring keys.

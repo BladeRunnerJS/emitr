@@ -1,4 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.emitr = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*eslint dot-notation:0*/
 'use strict';
 
 var slice = Array.prototype.slice;
@@ -160,7 +161,7 @@ Emitter.prototype = {
 			// clear all listeners for a particular eventIdentifier.
 			if (this._emitterListeners.hasAny(eventIdentifier)) {
 				var listeners = this._emitterListeners.getValues(eventIdentifier);
-				this._emitterListeners.delete(eventIdentifier);
+				this._emitterListeners['delete'](eventIdentifier);
 				if (this._emitterMetaEventsOn === true) {
 					notifyRemoves(this, listeners);
 				}
@@ -375,10 +376,9 @@ Event.prototype.toString = function() {
 module.exports = Event;
 
 },{"./shams":7}],3:[function(require,module,exports){
+(function (global){
 /*eslint no-native-reassign:0*/
 'use strict';
-
-var global = Function('return this')();
 
 var Map = global.Map;
 
@@ -442,8 +442,9 @@ if (Map === undefined || Map.prototype.forEach === undefined) {
 
 module.exports = Map;
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],4:[function(require,module,exports){
-/*eslint no-native-reassign:0*/
+/*eslint no-native-reassign:0, dot-notation:0*/
 'use strict';
 
 var Map = require('./Map');
@@ -481,7 +482,7 @@ MultiMap.prototype = {
 		var values = this._map.get(key).filter(filterFunction);
 
 		if (values.length === 0) {
-			this._map.delete(key);
+			this._map['delete'](key);
 		} else {
 			this._map.set(key, values);
 		}
@@ -496,7 +497,7 @@ MultiMap.prototype = {
 		this._map.forEach(function(values, key) {
 			var newValues = values.filter(filterFunction);
 			if (newValues.length === 0) {
-				map.delete(key);
+				map['delete'](key);
 			} else {
 				map.set(key, newValues);
 			}
@@ -517,7 +518,7 @@ MultiMap.prototype = {
 		return this._map.has(key);
 	},
 	'delete': function del(key) {
-		this._map.delete(key);
+		this._map['delete'](key);
 	}
 };
 

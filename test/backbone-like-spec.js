@@ -6,8 +6,7 @@
 // We can implement these features and tests later if required.
 
 var Emitter = require('..');
-var chai = require('chai');
-var expect = chai.expect;
+var expect = require('expectations');
 
 describe('A backbone-like Emitter,', function() {
 	var emitter;
@@ -35,19 +34,19 @@ describe('A backbone-like Emitter,', function() {
 
 		it('should call the listener for every time the event is triggered', function() {
 			emitter.trigger('event');
-			expect(emitter.counter).to.equal(1);
+			expect(emitter.counter).toEqual(1);
 			emitter.trigger('event');
 			emitter.trigger('event');
 			emitter.trigger('event');
 			emitter.trigger('event');
-			expect(emitter.counter).to.equal(5);
+			expect(emitter.counter).toEqual(5);
 		});
 
 		it('should stop calling the listener after off is called', function() {
 			emitter.trigger('event');
 			emitter.off('event');
 			emitter.trigger('event');
-			expect(emitter.counter).to.equal(1);
+			expect(emitter.counter).toEqual(1);
 		});
 
 		it('should stop receiving events if it calls off during an event firing', function() {
@@ -57,7 +56,7 @@ describe('A backbone-like Emitter,', function() {
 			emitter.trigger('event');
 			emitter.trigger('event');
 			emitter.trigger('event');
-			expect(emitter.counter).to.equal(1);
+			expect(emitter.counter).toEqual(1);
 		});
 
 		it('works with nested triggers.', function() {
@@ -68,7 +67,7 @@ describe('A backbone-like Emitter,', function() {
 			}
 			emitter.on('event', incr1);
 			emitter.trigger('event');
-			expect(emitter.counter).to.equal(3);
+			expect(emitter.counter).toEqual(3);
 		});
 
 	});
@@ -94,8 +93,8 @@ describe('A backbone-like Emitter,', function() {
 			emitter.trigger('event');
 			emitter.off('event', callback);
 			emitter.trigger('event');
-			expect(emitter.counterA).to.equal(1);
-			expect(emitter.counterB).to.equal(2);
+			expect(emitter.counterA).toEqual(1);
+			expect(emitter.counterB).toEqual(2);
 		});
 
 	});
@@ -111,7 +110,7 @@ describe('A backbone-like Emitter,', function() {
 		}, new TestClass());
 		emitter.trigger('event');
 
-		expect(called).to.be.true;
+		expect(called).toBe(true);
 	});
 
 	it('does not alter the callback list during an event trigger', function() {
@@ -126,7 +125,7 @@ describe('A backbone-like Emitter,', function() {
 		});
 		emitter.trigger('event');
 
-		expect(counter).to.equal(0);
+		expect(counter).toEqual(0);
 
 		emitter.off();
 
@@ -140,7 +139,7 @@ describe('A backbone-like Emitter,', function() {
 
 		emitter.trigger('event');
 
-		expect(counter).to.equal(2);
+		expect(counter).toEqual(2);
 	});
 
 	it('should allow all events for a specific context to be removed', function() {
@@ -155,8 +154,8 @@ describe('A backbone-like Emitter,', function() {
 		emitter.off(null, null, otherContext);
 		emitter.trigger('x');
 		emitter.trigger('y');
-		expect(emitter.counter).to.equal(2);
-		expect(otherContext.counter).to.equal(0);
+		expect(emitter.counter).toEqual(2);
+		expect(otherContext.counter).toEqual(0);
 	});
 
 	it('should remove consecutive events with off context', function() {
@@ -173,7 +172,7 @@ describe('A backbone-like Emitter,', function() {
 		emitter.on('event', callback2, context);
 		emitter.off(null, null, context);
 		emitter.trigger('event');
-		expect(context.called).to.be.false;
+		expect(context.called).toBe(false);
 	});
 
 	it('with two listeners added with once, when and event is triggered once and then retriggered by one of them, each listener should have been called once.', function() {
@@ -192,8 +191,8 @@ describe('A backbone-like Emitter,', function() {
 
 		emitter.trigger('event');
 
-		expect(emitter.counterA).to.equal(1);
-		expect(emitter.counterB).to.equal(1);
+		expect(emitter.counterA).toEqual(1);
+		expect(emitter.counterB).toEqual(1);
 	});
 
 	describe('with a listener that counts invocations and two emitters,', function() {
@@ -218,7 +217,7 @@ describe('A backbone-like Emitter,', function() {
 			b.trigger('event');
 			b.trigger('event');
 
-			expect(counter).to.equal(3);
+			expect(counter).toEqual(3);
 		});
 
 		it('adding a listener with once shouldn\'t stop it from working even on the same object and event with on', function() {
@@ -228,7 +227,7 @@ describe('A backbone-like Emitter,', function() {
 			a.trigger('event');
 			a.trigger('event');
 
-			expect(counter).to.equal(3);
+			expect(counter).toEqual(3);
 		});
 
 		it('a listener added with once can still be removed with off before the event fires.', function() {
@@ -236,7 +235,7 @@ describe('A backbone-like Emitter,', function() {
 			a.off('event', f);
 			a.trigger('event');
 
-			expect(counter).to.equal(0);
+			expect(counter).toEqual(0);
 		});
 
 		it('a listener added with once can be removed by context.', function() {
@@ -245,7 +244,7 @@ describe('A backbone-like Emitter,', function() {
 			a.clearListeners(context);
 			a.trigger('event');
 
-			expect(counter).to.equal(0);
+			expect(counter).toEqual(0);
 		});
 
 	});

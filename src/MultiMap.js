@@ -1,4 +1,4 @@
-/*eslint no-native-reassign:0*/
+/*eslint no-native-reassign:0, dot-notation:0*/
 'use strict';
 
 var Map = require('./Map');
@@ -36,7 +36,7 @@ MultiMap.prototype = {
 		var values = this._map.get(key).filter(filterFunction);
 
 		if (values.length === 0) {
-			this._map.delete(key);
+			this._map['delete'](key);
 		} else {
 			this._map.set(key, values);
 		}
@@ -51,7 +51,7 @@ MultiMap.prototype = {
 		this._map.forEach(function(values, key) {
 			var newValues = values.filter(filterFunction);
 			if (newValues.length === 0) {
-				map.delete(key);
+				map['delete'](key);
 			} else {
 				map.set(key, newValues);
 			}
@@ -72,7 +72,7 @@ MultiMap.prototype = {
 		return this._map.has(key);
 	},
 	'delete': function del(key) {
-		this._map.delete(key);
+		this._map['delete'](key);
 	}
 };
 

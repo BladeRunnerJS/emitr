@@ -1,3 +1,4 @@
+/*eslint dot-notation:0*/
 'use strict';
 
 var slice = Array.prototype.slice;
@@ -159,7 +160,7 @@ Emitter.prototype = {
 			// clear all listeners for a particular eventIdentifier.
 			if (this._emitterListeners.hasAny(eventIdentifier)) {
 				var listeners = this._emitterListeners.getValues(eventIdentifier);
-				this._emitterListeners.delete(eventIdentifier);
+				this._emitterListeners['delete'](eventIdentifier);
 				if (this._emitterMetaEventsOn === true) {
 					notifyRemoves(this, listeners);
 				}

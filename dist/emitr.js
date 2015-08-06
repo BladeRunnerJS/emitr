@@ -7,8 +7,6 @@ var slice = Array.prototype.slice;
 var metaEvents = require('./events');
 var MultiMap = require('./MultiMap');
 
-var getPrototypeOf = require('./shams').getPrototypeOf;
-
 ///////////////////////////////////////////////////////////////////////////
 var ONCE_FUNCTION_MARKER = {};
 
@@ -211,14 +209,14 @@ Emitter.prototype = {
 
 			// navigate up the prototype chain emitting against the constructors.
 			if (typeof event === 'object') {
-				var last = event, proto = getPrototypeOf(event);
+				var last = event, proto = Object.getPrototypeOf(event);
 				while (proto !== null && proto !== last) {
 					if (this._emitterListeners.hasAny(proto.constructor)) {
 						anyListeners = true;
 						notify(this._emitterListeners.getValues(proto.constructor), arguments);
 					}
 					last = proto;
-					proto = getPrototypeOf(proto);
+					proto = Object.getPrototypeOf(proto);
 				}
 			}
 		}
@@ -282,10 +280,9 @@ Emitter.mixInto = function(destination) {
 
 module.exports = Emitter;
 
-},{"./MultiMap":4,"./events":5,"./shams":7}],2:[function(require,module,exports){
+},{"./MultiMap":4,"./events":5}],2:[function(require,module,exports){
 'use strict';
 
-var shams = require('./shams');
 // Event ///////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -327,7 +324,7 @@ Event.extend = function inlineExtend(properties) {
 		};
 	}
 	subclassConstructor.superclass = superclass;
-	subclassConstructor.prototype = shams.create(superclass.prototype, {
+	subclassConstructor.prototype = Object.create(superclass.prototype, {
 		constructor: {
 			enumerable: false, value: subclassConstructor
 		}
@@ -339,7 +336,7 @@ Event.extend = function inlineExtend(properties) {
 	}
 
 	if (typeof properties === 'object') {
-		if (shams.getPrototypeOf(properties) !== Object.prototype) {
+		if (Object.getPrototypeOf(properties) !== Object.prototype) {
 			throw new Error('extend: Can\'t extend something that already has a prototype chain.');
 		}
 		for (var instanceProperty in properties) {
@@ -375,7 +372,7 @@ Event.prototype.toString = function() {
 
 module.exports = Event;
 
-},{"./shams":7}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 (function (global){
 /*eslint no-native-reassign:0*/
 'use strict';
@@ -612,79 +609,5 @@ module.exports = require('./Emitter');
 module.exports.meta = require('./events');
 module.exports.Event = require('./Event');
 
-},{"./Emitter":1,"./Event":2,"./events":5}],7:[function(require,module,exports){
-/*eslint no-proto:0*/
-'use strict';
-
-// Partial 'sham' to work around ie8s lack of es5 //////////////////////////////////////////////
-// When IE8 support is no longer needed, all these can be dropped in favour of the es5 methods.
-
-exports.getPrototypeOf = function getPrototypeOf(obj) {
-	if (Object.getPrototypeOf) {
-		var proto = Object.getPrototypeOf(obj);
-
-		// to avoid bad shams...
-		if (proto !== obj) {
-			return proto;
-		}
-	}
-
-	// this is what most shams do, but sometimes it's wrong.
-	if (obj.constructor && obj.constructor.prototype && obj.constructor.prototype !== obj) {
-		return obj.constructor.prototype;
-	}
-
-	// this works only if we've been kind enough to supply a superclass property
-	// (which we do when we extend classes).
-	if (obj.constructor && obj.constructor.superclass) {
-		return obj.constructor.superclass.prototype;
-	}
-
-	// can't find a good prototype.
-	return null;
-};
-
-var defineProperty = function(obj, prop, descriptor) {
-	obj[prop] = descriptor.value;
-};
-if (Object.defineProperty) {
-	try {
-		// IE8 throws an error here.
-		Object.defineProperty({}, 'x', {});
-		defineProperty = Object.defineProperty;
-	} catch (e) {
-		// do nothing
-	}
-}
-exports.defineProperty = defineProperty;
-
-exports.create = function create(proto, descriptors) {
-	var result;
-
-	if(Object.create) {
-		result = Object.create(proto, descriptors);
-
-		var dunderProtoPassedIn = (proto && proto.__proto__) || (descriptors && descriptors.__proto__);
-
-		if(result.__proto__ && !dunderProtoPassedIn) {
-			//ES5 shim added this and it's a lie so delete it.
-			delete result.__proto__;
-		}
-	} else {
-		var MyConstructor = function() {};
-		MyConstructor.prototype = proto;
-
-		result = new MyConstructor();
-
-		var keys = Object.keys(descriptors);
-		for (var i = 0; i < keys.length; ++i) {
-			var key = keys[i];
-			defineProperty(result, key, descriptors[key]);
-		}
-	}
-
-	return result;
-};
-
-},{}]},{},[6])(6)
+},{"./Emitter":1,"./Event":2,"./events":5}]},{},[6])(6)
 });

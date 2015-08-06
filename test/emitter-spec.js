@@ -283,12 +283,9 @@ describe('An Emitter', function(){
 			function SubClassEvent() {
 				MyEvent.call(this, 99, 119);
 			}
-			// naive inheritance so as to work with ie8.  Don't actually do it like this.
-			// use Object.create or a library like topiarist.  Any problems, and you can set
-			// the superclass property manually.
-			SubClassEvent.prototype = new MyEvent();
+
+			SubClassEvent.prototype = Object.create(MyEvent.prototype);
 			SubClassEvent.prototype.constructor = SubClassEvent;
-			SubClassEvent.superclass = MyEvent;
 
 			emitter.trigger(new SubClassEvent());
 

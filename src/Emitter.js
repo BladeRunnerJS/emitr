@@ -6,8 +6,6 @@ var slice = Array.prototype.slice;
 var metaEvents = require('./events');
 var MultiMap = require('./MultiMap');
 
-var getPrototypeOf = require('./shams').getPrototypeOf;
-
 ///////////////////////////////////////////////////////////////////////////
 var ONCE_FUNCTION_MARKER = {};
 
@@ -210,14 +208,14 @@ Emitter.prototype = {
 
 			// navigate up the prototype chain emitting against the constructors.
 			if (typeof event === 'object') {
-				var last = event, proto = getPrototypeOf(event);
+				var last = event, proto = Object.getPrototypeOf(event);
 				while (proto !== null && proto !== last) {
 					if (this._emitterListeners.hasAny(proto.constructor)) {
 						anyListeners = true;
 						notify(this._emitterListeners.getValues(proto.constructor), arguments);
 					}
 					last = proto;
-					proto = getPrototypeOf(proto);
+					proto = Object.getPrototypeOf(proto);
 				}
 			}
 		}

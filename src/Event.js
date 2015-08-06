@@ -1,6 +1,5 @@
 'use strict';
 
-var shams = require('./shams');
 // Event ///////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -42,7 +41,7 @@ Event.extend = function inlineExtend(properties) {
 		};
 	}
 	subclassConstructor.superclass = superclass;
-	subclassConstructor.prototype = shams.create(superclass.prototype, {
+	subclassConstructor.prototype = Object.create(superclass.prototype, {
 		constructor: {
 			enumerable: false, value: subclassConstructor
 		}
@@ -54,7 +53,7 @@ Event.extend = function inlineExtend(properties) {
 	}
 
 	if (typeof properties === 'object') {
-		if (shams.getPrototypeOf(properties) !== Object.prototype) {
+		if (Object.getPrototypeOf(properties) !== Object.prototype) {
 			throw new Error('extend: Can\'t extend something that already has a prototype chain.');
 		}
 		for (var instanceProperty in properties) {

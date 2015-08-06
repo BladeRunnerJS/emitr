@@ -1,6 +1,6 @@
 {
   "name": "emitr",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An node/browser event emitter that supports dispatching based on types.",
   "homepage": "http://BladeRunnerJS.github.io/emitr",
   "license": "MIT",

@@ -7,5 +7,5 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 env:
   global:
-    - secure: RuPKeVzDdxLy8JZuEuN/2YmiwtVaBGGr63IPxqAhFuG3Wc55nIAK/ma7aZ78vHhCn41oGElU1fZ4JMxcQzCyb3b03uF6+8rkj94MGh85LoHTC0Gj5mGJyAH6X+c90DrfZJxt/K26tWgx4ijmA5yYcDEFXb3D7KhIdq0Fos+oK5Y=
-    - secure: LT1vkDCvKGpgD1FxnXIrMx1pz1pEoWWAnCy06gOuD4Ai0peH+Vuk1QuakDnpBDHwTh335StHtxw7XdkSZEvRCNSyruq/UUmoOP7tMf5+i1Ohi0DwzD1SwlmhpgCvvz3Gf8dERVEubw0zqthbO9Ip38VwqxDnRjvCMjLu1c6yE/4=
+    - secure: lcTx+1dtANTsN6RROKjT0G9Ih8FDxJ4pQm2JaF9ck0bgfPHufa2lDJiSHtOJag4etTe6H4N7UcUsgThfwzVzUe5TbNjTSo+c7Y2BPxlrKiJg0MTyKoQKRo3wcwVTfnTydEfpq4VJmgVZG4W8/eyZwNNYc2yq5K2kVp9GhhrcTBo=
+    - secure: d4wWqDoImfQr+VgliuCJo4hEUWXpfZmLI3M4X7TRnKomnQ4B/EQ1okod4+DA8bRxLcGn+3B8ybtu8im4N2rZylWPAPxIOZEABx5i2TngzpRwvPUtyv+4cRqRm2IcYjpAUVbdDYpFnUG4rMv1KxcHDeTUrmhAYH7oF2f4dq02RWw=

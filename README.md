@@ -1,230 +1,193 @@
-<script type="text/javascript" src="dist/emitr.js"></script>
+# emitr
 
-emitr
-=====
-
-A simple emitter for node and the browser.
+A simple emitter for Node.js and the browser.
 
 [![Build Status](https://travis-ci.org/BladeRunnerJS/emitr.png)](https://travis-ci.org/BladeRunnerJS/emitr)
 
-The rendered form of this document includes the Emitter script so you can open a console and try it
-immediately.
+The inspirations in making this implementation were the events in [backbone](http://backbonejs.org/#Events), and the EventEmitter in [Node.js](http://nodejs.org/docs/latest/api/all.html#all_class_events_eventemitter).
 
-My two main inspirations in making this implementation were the events in [backbone](http://backbonejs.org/#Events),
-and the EventEmitter in [node](http://nodejs.org/docs/latest/api/all.html#all_class_events_eventemitter).
+If we hadn't required the ability to pass `context` into `on` and `off`, we probably would have gone with [LucidJS](http://robertwhurst.github.io/LucidJS/).  Not leaking memory is difficult enough when building large applications; forcing people to keep extra objects around just so they can clean up after themselves is ugly enough that it discourages people from doing something important.
 
-If we hadn't required the ability to pass 'context' into `on` and `off`, we probably would have gone with
-[LucidJS](http://robertwhurst.github.io/LucidJS/).  Not leaking memory is difficult enough when
-building large applications; forcing people to keep extra objects around just so they can clean up after
-themselves is ugly enough that it discourages people from doing something important.
+While I haven't come across this exact combination of focussed microlibrary combined with context, the only unusual feature of this Emitter (and deliberately so) is that it allows you to listen to and dispatch objects rather than just strings.  Related to this is type based events, which I describe later.
 
-While I haven't come across this exact combination of focussed microlibrary combined with context,
-the only unusual feature of this Emitter (and deliberately so) is that it allows you to listen to and
-dispatch objects rather than just strings.  Related to this is type based events, which I describe
-later.
+## Getting It
 
-Getting It
-----------
+In Node.js:
 
-In node
-
-    $ npm install emitr --save
-
-To get the source (you'll want to npm install it afterwards)
-
-    $ git clone https://github.com/BladeRunnerJS/emitr.git
-
-With Bower
-
-    $ bower install emitr
-
-In the browser (better to take a copy of the file and serve it from within your app)
-
-    <script type="text/javascript" src="http://bladerunnerjs.github.io/emitr/dist/emitr.js"></script>
-
-With require.js (again, better to take a copy and serve it within your app)
-
-    require(["http://bladerunnerjs.github.io/emitr/dist/emitr.js"], function(emitr) {
-        // do your thing with emitr
-    });
-
-
-Making an Emitter
------------------
-
-While you can directly create a new Emitter (with `new emitr()`, or use standard prototypical
-inheritance to inherit from it, usually you will want to mix the Emitter
-methods in to your own classes or objects.
-
-```javascript
-
-	function MyEmitter() {};
-	emitr.mixInto(MyEmitter);
-
-	var emitter = new MyEmitter();
+```sh
+npm install --save emitr
 ```
 
-Standard Emitter Features
--------------------------
+then:
+
+```js
+var emitr = require('emitr');
+```
+
+For the browser, download the latest [release](https://github.com/BladeRunnerJS/emitr/releases), and refer to it from your script tag:
+
+```html
+<script type="text/javascript" src="dist/emitr.js"></script>
+```
+
+
+## Making an Emitter
+
+While you can directly create a new Emitter (with `new emitr()`, or use standard prototypical inheritance to inherit from it, usually you will want to mix the Emitter methods in to your own classes or objects.
+
+```js
+function MyEmitter() {};
+emitr.mixInto(MyEmitter);
+
+var emitter = new MyEmitter();
+```
+
+## Standard Emitter Features
 
 The big three methods are provided:
 
-on:
+`on`:
 
-```javascript
+```js
+// Basic example:
 
-	// Basic example:
+emitter.on('some-event', function() {
+	// By default, 'this' is set to emitter inside here.
+	// you can change that by providing a context argument.
+});
 
-	emitter.on('some-event', function() {
-		// By default, 'this' is set to emitter inside here.
-		// you can change that by providing a context argument.
-	});
+// Example using context:
 
-	// Example using context:
+function MyObject() {}
+MyObject.prototype.onBoom = function() {
+	// in this example, 'this' is set to 'obj'.
+};
 
-	function MyObject() {}
-	MyObject.prototype.onBoom = function() {
-		// in this example, 'this' is set to 'obj'.
-	};
-
-	var obj = new MyObject();
-	emitter.on('end-of-the-world', obj.onBoom, obj);
+var obj = new MyObject();
+emitter.on('end-of-the-world', obj.onBoom, obj);
 ```
 
-The poorly (but commonly) named off:
+The poorly (but commonly) named `off`:
 
-```javascript
+```js
+// clears all listeners registered on emitter.
+emitter.off();
 
-	// clears all listeners registered on emitter.
-	emitter.off();
+// clears all listeners for 'some-event'.
+emitter.off('some-event');
 
-	// clears all listeners for 'some-event'.
-	emitter.off('some-event');
+// removes the listener added with
+//    emitter.on('some-event', callback);
+emitter.off('some-event', callback);
 
-	// removes the listener added with
-	//    emitter.on('some-event', callback);
-	emitter.off('some-event', callback);
+// removes the listener added with
+//    emitter.on('some-event', callback, context);
+emitter.off('some-event', callback, context);
 
-	// removes the listener added with
-	//    emitter.on('some-event', callback, context);
-	emitter.off('some-event', callback, context);
-
-	// removes all listeners registered with a context of context.
-	emitter.off(null, null, context);
-	// or
-	emitter.clearListeners(context);
+// removes all listeners registered with a context of context.
+emitter.off(null, null, context);
+// or
+emitter.clearListeners(context);
 ```
 
-trigger (sometimes called emit or fire or notify):
+`trigger` (sometimes called `emit` or `fire` or `notify`):
 
-```javascript
-
-	// All listeners registered for the 'end-of-the-world' event
-	// will get called with alienSpacecraft as their first argument.
-	emitters.trigger('end-of-the-world', alienSpacecraft);
+```js
+// All listeners registered for the 'end-of-the-world' event
+// will get called with alienSpacecraft as their first argument.
+emitters.trigger('end-of-the-world', alienSpacecraft);
 ```
 
-once is another function that is commonly provided by Emitters:
+`once` is another function that is commonly provided by Emitters:
 
-```javascript
+```js
+// Once behaves similarly to .on, but the listener is only
+// ever called once.
+emitter.once('some-event', function() {
+	// this function will only be called once.
+});
 
-	// Once behaves similarly to .on, but the listener is only
-	// ever called once.
-	emitter.once('some-event', function() {
-		// this function will only be called once.
-	});
-
-	emitter.trigger('some-event');
-	emitter.trigger('some-event');
+emitter.trigger('some-event');
+emitter.trigger('some-event');
 ```
 
-Extra Features
------------------
+## Extra Features
 
 This Emitter provides two extra features.
 
 ### MetaEvents
 
-The emitter will also trigger special events that you can listen to in certain
-circumstances. The event emitter in node does a similar thing, firing `newListener`
-and `removeListener` events at the appropriate time.
+The emitter will also trigger special events that you can listen to in certain circumstances. The event emitter in node does a similar thing, firing `newListener` and `removeListener` events at the appropriate time.
 
 There are three meta events which are:
 
-* `emitr.meta.AddListenerEvent`, triggered when a listener is added.
-* `emitr.meta.RemoveListenerEvent`, triggered when a listener is removed.
-* `emitr.meta.DeadEvent`, triggered when an event is fired but no listeners receive it.
+  * `emitr.meta.AddListenerEvent`, triggered when a listener is added.
+  * `emitr.meta.RemoveListenerEvent`, triggered when a listener is removed.
+  * `emitr.meta.DeadEvent`, triggered when an event is fired but no listeners receive it.
 
-```javascript
+```js
+// In this example, I use an AddListenerEvent metaevent to
+// create 'sticky' events behaviour for the ready event.
 
-	// In this example, I use an AddListenerEvent metaevent to
-	// create 'sticky' events behaviour for the ready event.
+function Document() {
+	this.isReady = false;
 
-	function Document() {
-		this.isReady = false;
+	this.on(Emitter.meta.AddListenerEvent, function(addEvent) {
+		if (this.isReady) {
+			addEvent.listener.call(addEvent.context);
+		}
+	}, this);
+}
+Emitter.mixInto(Document);
+Document.prototype.makeReady = function() {
+	this.isReady = true;
+	this.trigger('ready');
+};
 
-		this.on(Emitter.meta.AddListenerEvent, function(addEvent) {
-			if (this.isReady) {
-				addEvent.listener.call(addEvent.context);
-			}
-		}, this);
-	}
-	Emitter.mixInto(Document);
-	Document.prototype.makeReady = function() {
-		this.isReady = true;
-		this.trigger('ready');
-	};
+var doc = new Document();
 
-	var doc = new Document();
+doc.makeReady();
 
-	doc.makeReady();
+// Even though makeReady was called before this 'on',
+// the listener will still be called.
 
-	// Even though makeReady was called before this 'on',
-	// the listener will still be called.
-
-	doc.on('ready', function() {
-		console.log('ready now');
-	});
+doc.on('ready', function() {
+	console.log('ready now');
+});
 ```
 
 ### Type Based Events
 
-The Events themselves in normal usage are usually string identifiers and then a list of
-arguments, almost like an algebraic data type - a tag and then a tuple of data items.  In an
-object language like javascript, it seems more natural to dispatch event objects instead and
-listen for them based on their type.
+The Events themselves in normal usage are usually string identifiers and then a list of arguments, almost like an algebraic data type - a tag and then a tuple of data items. In an object language like javascript, it seems more natural to dispatch event objects instead and listen for them based on their type.
 
-```javascript
+```js
+function MouseEvent(x, y) {
+	this.x = x;
+	this.y = y;
+}
 
-	function MouseEvent(x, y) {
-		this.x = x;
-		this.y = y;
-	}
+emitter.on(MouseEvent, function(event) {
+	// in here, event is the instance of MouseEvent that
+	// we trigger the emitter with.
+});
 
-	emitter.on(MouseEvent, function(event) {
-		// in here, event is the instance of MouseEvent that
-		// we trigger the emitter with.
-	});
-
-	emitter.trigger(new MouseEvent(100, 99));
+emitter.trigger(new MouseEvent(100, 99));
 ```
 
-It obeys the Liskov Substitution Principle, so a listener will also get notified of
-events that are subclasses of the event type it is registered for.
+It obeys the Liskov Substitution Principle, so a listener will also get notified of events that are subclasses of the event type it is registered for.
 
-```javascript
+```js
+function ClickEvent(button, x, y) {
+	MouseEvent.call(this, x, y);
+	this.button = button;
+}
 
-	function ClickEvent(button, x, y) {
-		MouseEvent.call(this, x, y);
-		this.button = button;
-	}
+ClickEvent.prototype = Object.create(MouseEvent.prototype);
 
-	ClickEvent.prototype = Object.create(MouseEvent.prototype);
+emitter.on(MouseEvent, function(event) {
+	// in here, event is the instance of ClickEvent that
+	// we trigger the emitter with.
+});
 
-	emitter.on(MouseEvent, function(event) {
-		// in here, event is the instance of ClickEvent that
-		// we trigger the emitter with.
-	});
-
-	emitter.trigger(new ClickEvent("right", 101, 100));
+emitter.trigger(new ClickEvent("right", 101, 100));
 ```

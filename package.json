@@ -10,7 +10,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "prepublish": "browserify src/index.js -s emitr -o dist/emitr.js",
+    "prepublish": "mkdirp dist && browserify src/index.js -s emitr -o dist/emitr.js",
     "test": "npm run test:lint && npm run test:node && npm run test:browser && npm run test:saucelabs",
     "test:lint": "eslint src test",
     "test:node": "mocha test",
@@ -33,6 +33,7 @@
     "karma-firefox-launcher": "^0.1.6",
     "karma-mocha": "^0.2.0",
     "karma-sauce-launcher": "^0.2.14",
+    "mkdirp": "^0.5.1",
     "mocha": "^2.2.5"
   }
 }

@@ -10,6 +10,11 @@ describe('An Emitter', function(){
 		emitter = new Emitter();
 	});
 
+	afterEach(function() {
+		Emitter.suppressErrors = true;
+		emitter = null;
+	});
+
 	it('when an event is triggered without listeners, then the emitter should trigger a DeadEvent.', function() {
 		var receivedEvent = null;
 		emitter.on(Emitter.meta.DeadEvent, function(event) {
@@ -464,5 +469,23 @@ describe('An Emitter', function(){
 		emitter.trigger('ev');
 
 		expect(called).toBe(true);
+	});
+
+	it('does not swallow the exception when suppressErrors is set to false and the listener errors', function() {
+		var called = false;
+		Emitter.suppressErrors = false;
+
+		emitter.on('ev', function() {
+			throw 'error';
+		});
+		emitter.on('ev', function() {
+			called = true;
+		});		
+
+		expect(function () { 
+			emitter.trigger('ev');
+		}).toThrow();
+
+		expect(called).toBe(false);
 	});
 });

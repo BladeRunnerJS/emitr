@@ -480,9 +480,9 @@ describe('An Emitter', function(){
 		});
 		emitter.on('ev', function() {
 			called = true;
-		});		
+		});
 
-		expect(function () { 
+		expect(function () {
 			emitter.trigger('ev');
 		}).toThrow();
 
